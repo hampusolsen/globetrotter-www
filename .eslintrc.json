@@ -2,10 +2,17 @@
     "extends": [
         "wesbos"
     ],
+    "env": {
+        "es2017": true
+    },
+    "ecmaFeatures": {
+        "jsx": true
+    },
     "rules": {
         "linebreak-style": [
             "error",
             "unix"
-        ]
+        ],
+        "sort-imports": "off"
     }
 }
