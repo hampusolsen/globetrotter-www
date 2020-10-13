@@ -1,6 +1,6 @@
 {
     "hooks": {
-        "pre-commit": "eslint . --fix",
+        "pre-commit": "yarn lint",
         "pre-push": "yarn test"
     }
 }
