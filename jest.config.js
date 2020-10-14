@@ -6,5 +6,5 @@ module.exports = {
     coveragePathIgnorePatterns: ["/node_modules/", "/store/"],
     coverageDirectory: "./coverage",
     globals: {},
-    moduleFileExtensions: ["tsx", "ts"],
+    moduleFileExtensions: ["tsx", "ts", "js"],
 };
