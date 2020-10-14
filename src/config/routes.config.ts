@@ -1,3 +1,4 @@
+// @ts-ignore-next-line
 import { RouteProps } from "react-router-dom";
 import DashboardFrame from "../components/frames/Dashboard.frame";
 import ProfileFrame from "../components/frames/Profile.frame";
@@ -9,17 +10,16 @@ import WelcomeView from "../components/views/Welcome.view";
 export const routes: RouteProps[] = [
     {
         path: "/",
-        component: HomeView,
         children: [
-            { path: "/dashboard", component: DashboardFrame },
-            { path: "/profile", component: ProfileFrame },
+            HomeView,
+            { path: "/dashboard", children: DashboardFrame },
+            { path: "/profile", children: ProfileFrame },
         ],
     },
-    { path: "/map", component: MapView },
+    { path: "/map", children: MapView },
     {
         path: "/travel",
-        component: TravelView,
-        children: [{ path: "/travel/", component: null }],
+        children: [TravelView, { path: "/travel/", component: null }],
     },
-    { path: "/welcome", component: WelcomeView },
+    { path: "/welcome", children: WelcomeView },
 ];

@@ -1,9 +1,12 @@
 import React from "react";
-import { LinkProps, useRouteMatch } from "react-router-dom";
+// @ts-ignore-next-line
+import { LinkProps, matchRoutes, useLocation } from "react-router-dom";
+import { routes } from "../../../config/routes.config";
 import { StyledNavLink } from "./NavLink.style";
 
 const NavLink: React.FC<LinkProps> = ({ to, ...rest }) => {
-    const match = useRouteMatch(to as string);
+    const location = useLocation();
+    const match = matchRoutes(routes, location);
 
     return <StyledNavLink isActive={!!match} to={to} {...rest} />;
 };

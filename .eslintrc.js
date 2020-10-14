@@ -17,6 +17,7 @@ module.exports = {
         "linebreak-style": ["error", "unix"],
         "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
     },
     settings: {
         react: {
