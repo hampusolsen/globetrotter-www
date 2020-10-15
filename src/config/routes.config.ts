@@ -10,16 +10,22 @@ import WelcomeView from "../components/views/Welcome.view";
 export const routes: RouteProps[] = [
     {
         path: "/",
+        element: HomeView,
         children: [
-            HomeView,
-            { path: "/dashboard", children: DashboardFrame },
-            { path: "/profile", children: ProfileFrame },
+            { path: "/dashboard", element: DashboardFrame },
+            { path: "/profile", element: ProfileFrame },
         ],
     },
-    { path: "/map", children: MapView },
+    {
+        path: "/map",
+        children: MapView,
+    },
     {
         path: "/travel",
-        children: [TravelView, { path: "/travel/", component: null }],
+        element: TravelView,
     },
-    { path: "/welcome", children: WelcomeView },
+    {
+        path: "/welcome",
+        element: WelcomeView,
+    },
 ];
