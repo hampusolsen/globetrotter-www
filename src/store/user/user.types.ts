@@ -1,16 +1,16 @@
-import { RequestStatus } from "../../utils/api/api.types";
+import { RequestStatus } from "../../api/api.types";
 
 export interface IUserData {
-    username: string;
-    followers: number;
-    following: number;
-    profile_pic: string | null;
-    travels: string[];
-    description: string | null;
-    created_at: string;
+  username: string;
+  followers: number;
+  following: number;
+  profile_pic: string | null;
+  travels: string[];
+  description: string | null;
+  created_at: string;
 }
 
 export interface IUserState {
-    data: IUserData;
-    status: RequestStatus;
+  data: IUserData;
+  status: RequestStatus;
 }

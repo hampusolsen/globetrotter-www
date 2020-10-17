@@ -1,5 +1,3 @@
-// @ts-ignore-next-line
-import { RouteProps } from "react-router-dom";
 import DashboardFrame from "../components/frames/Dashboard.frame";
 import ProfileFrame from "../components/frames/Profile.frame";
 import HomeView from "../components/views/Home.view";
@@ -7,25 +5,38 @@ import MapView from "../components/views/Map.view";
 import TravelView from "../components/views/Travel.view";
 import WelcomeView from "../components/views/Welcome.view";
 
-export const routes: RouteProps[] = [
-    {
-        path: "/",
-        element: HomeView,
-        children: [
-            { path: "/dashboard", element: DashboardFrame },
-            { path: "/profile", element: ProfileFrame },
-        ],
-    },
-    {
-        path: "/map",
-        children: MapView,
-    },
-    {
-        path: "/travel",
-        element: TravelView,
-    },
-    {
-        path: "/welcome",
-        element: WelcomeView,
-    },
+export interface RouteObject {
+  caseSensitive: boolean;
+  children?: RouteObject[];
+  element: React.ReactNode;
+  path: string;
+}
+
+const routesConfig: RouteObject[] = [
+  {
+    path: "/",
+    element: HomeView,
+    caseSensitive: false,
+    children: [
+      { path: "dashboard", element: DashboardFrame, caseSensitive: false },
+      { path: "profile", element: ProfileFrame, caseSensitive: false },
+    ],
+  },
+  {
+    path: "/map",
+    element: MapView,
+    caseSensitive: false,
+  },
+  {
+    path: "/travel",
+    element: TravelView,
+    caseSensitive: false,
+  },
+  {
+    path: "/welcome",
+    element: WelcomeView,
+    caseSensitive: false,
+  },
 ];
+
+export default routesConfig;

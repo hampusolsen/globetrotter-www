@@ -1,7 +1,5 @@
 import React from "react";
 
-const Authorizer: React.FC = () => {
-    return <div></div>;
-};
+const Authorizer: React.FC = () => <div />;
 
 export default Authorizer;
