@@ -5,6 +5,7 @@ import {
   IErrorResponseData,
   ITestResponseData,
   PENDING,
+  REJECTED
 } from "../../api/api.types";
 import { testError, testHelloWorld } from "./tst.thunks";
 import { ITestState } from "./tst.types";
@@ -12,7 +13,7 @@ import { ITestState } from "./tst.types";
 const initialState: ITestState = {
   status: IDLE,
   data: {} as ITestResponseData,
-  errors: [] as IErrorResponseData[],
+  errors: []
 };
 
 const tstReducer = createSlice({
@@ -29,15 +30,14 @@ const tstReducer = createSlice({
       state.status = PENDING;
     });
 
-    builder.addCase(testError.fulfilled, (state, action) => {
-      state.status = FULFILLED;
-      state.errors = action.payload;
+    builder.addCase(testHelloWorld.rejected, (state) => {
+      state.status = REJECTED;
     });
 
-    builder.addCase(testError.pending, (state) => {
-      state.status = PENDING;
+    builder.addCase(testError.rejected, (state, action) => {
+      state.errors.push(action.payload as IErrorResponseData);
     });
-  },
+  }
 });
 
 export const tstActions = tstReducer.actions;

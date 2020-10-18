@@ -4,7 +4,7 @@ import { ErrorResponse, IAPIClient, TestResponse } from "./api.types";
 class APIClient implements IAPIClient {
   #client = Axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    withCredentials: true,
+    withCredentials: true
   });
 
   test(): Promise<TestResponse> {

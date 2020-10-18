@@ -9,19 +9,19 @@ const userData: IUserData = {
   profile_pic: "",
   travels: [],
   description: "",
-  created_at: "",
+  created_at: ""
 };
 
 const initialState: IUserState = {
   data: userData,
-  status: IDLE,
+  status: IDLE
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {},
+  extraReducers: {}
 });
 
 export default userSlice.reducer;

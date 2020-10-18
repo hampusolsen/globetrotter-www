@@ -9,12 +9,12 @@ export type RootState = ReturnType<typeof reducer>;
 
 export const reducer = combineReducers({
   test: testReducer,
-  user: userReducer,
+  user: userReducer
 });
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== PRODUCTION,
-  reducer,
+  reducer
 });
 
 export const { dispatch } = store;

@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
 export const PENDING = "PENDING";
 export const REJECTED = "REJECTED";
@@ -22,9 +22,7 @@ export interface IErrorResponseData {
   name: string;
 }
 
-export interface ErrorResponse extends AxiosError {
-  errors: IErrorResponseData[];
-}
+export type ErrorResponse = AxiosResponse<IErrorResponseData>;
 
 export type TestResponse = AxiosResponse<{ hello: string }>;
 

@@ -1,7 +1,7 @@
 import {
   IErrorResponseData,
   ITestResponseData,
-  RequestStatus,
+  RequestStatus
 } from "../../api/api.types";
 
 export interface ITestState {

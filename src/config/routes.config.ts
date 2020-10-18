@@ -19,24 +19,24 @@ const routesConfig: RouteObject[] = [
     caseSensitive: false,
     children: [
       { path: "dashboard", element: DashboardFrame, caseSensitive: false },
-      { path: "profile", element: ProfileFrame, caseSensitive: false },
-    ],
+      { path: "profile", element: ProfileFrame, caseSensitive: false }
+    ]
   },
   {
     path: "/map",
     element: MapView,
-    caseSensitive: false,
+    caseSensitive: false
   },
   {
     path: "/travel",
     element: TravelView,
-    caseSensitive: false,
+    caseSensitive: false
   },
   {
     path: "/welcome",
     element: WelcomeView,
-    caseSensitive: false,
-  },
+    caseSensitive: false
+  }
 ];
 
 export default routesConfig;

@@ -4,14 +4,13 @@
     "es2020": true
   },
   "extends": [
+    "plugin:prettier/recommended",
     "airbnb-typescript",
     "airbnb/hooks",
     "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended",
     "prettier",
     "prettier/react",
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
+    "prettier/@typescript-eslint"
   ],
   "ignorePatterns": [
     "node_modules",
@@ -28,16 +27,19 @@
   },
   "plugins": [
     "react",
-    "@typescript-eslint"
+    "jsx-a11y",
+    "import",
+    "@typescript-eslint",
+    "prettier"
   ],
   "rules": {
+    // Off to enable immer working in redux toolkit
     "no-param-reassign": "off",
-    "import/prefer-default-export": "off",
-    "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": "off",
+    "react/prop-types": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "import/no-named-as-default": "off"
+    "@typescript-eslint/no-shadow": "off"
   },
   "settings": {
     "react": {

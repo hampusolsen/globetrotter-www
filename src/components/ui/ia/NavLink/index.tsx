@@ -1,7 +1,7 @@
 import React from "react";
 import { LinkProps, matchRoutes, useLocation } from "react-router-dom";
 import routes from "../../../../config/routes.config";
-import { StyledNavLink } from "./NavLink.style";
+import StyledNavLink from "./NavLink.style";
 
 const NavLink: React.FC<LinkProps> = ({ to, ...rest }) => {
   const location = useLocation();
