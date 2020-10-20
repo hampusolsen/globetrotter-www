@@ -9,7 +9,7 @@ const size = {
   desktop: "1440px"
 };
 
-const formatMediaQuery = (size: string) => `@media (min-width: ${size})`;
+const formatMediaQuery = (size: string) => `@media (max-width: ${size})`;
 
 export const media = {
   phone: formatMediaQuery(size.phone),
@@ -58,6 +58,11 @@ export const color = {
  */
 
 export const font = {
+  button: {
+    size: {
+      phone: 0.76
+    }
+  },
   bread: {
     family: "Roboto",
     size: {

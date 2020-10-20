@@ -1,19 +1,11 @@
 import { AxiosResponse } from "axios";
-
-export const PENDING = "PENDING";
-export const REJECTED = "REJECTED";
-export const FULFILLED = "FULFILLED";
-export const IDLE = "IDLE";
+import { FULFILLED, IDLE, PENDING, REJECTED } from "../config/constants.config";
 
 export type RequestStatus =
   | typeof IDLE
   | typeof PENDING
   | typeof FULFILLED
   | typeof REJECTED;
-
-export interface ITestResponseData {
-  hello: string;
-}
 
 export interface IErrorResponseData {
   status: string;
@@ -27,6 +19,5 @@ export type ErrorResponse = AxiosResponse<IErrorResponseData>;
 export type TestResponse = AxiosResponse<{ hello: string }>;
 
 export interface IAPIClient {
-  test: () => Promise<TestResponse>;
-  error: () => Promise<ErrorResponse>;
+  getUser: (url: string) => Promise<AxiosResponse | ErrorResponse>;
 }

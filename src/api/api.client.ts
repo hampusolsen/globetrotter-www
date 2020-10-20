@@ -1,5 +1,5 @@
-import Axios from "axios";
-import { ErrorResponse, IAPIClient, TestResponse } from "./api.types";
+import Axios, { AxiosResponse } from "axios";
+import { IAPIClient } from "./api.types";
 
 class APIClient implements IAPIClient {
   #client = Axios.create({
@@ -7,12 +7,8 @@ class APIClient implements IAPIClient {
     withCredentials: true
   });
 
-  test(): Promise<TestResponse> {
-    return this.#client.get("/test");
-  }
-
-  error(): Promise<ErrorResponse> {
-    return this.#client.get("/error");
+  getUser(url: string): Promise<AxiosResponse> {
+    return this.#client.get(url);
   }
 }
 

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IDLE } from "../../api/api.types";
+import { IDLE } from "../../config/constants.config";
 import { IUserData, IUserState } from "./user.types";
 
 const userData: IUserData = {
