@@ -46,18 +46,3 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
-@font-face {
-  font-family: 'YesevaOne';
-  src: local('Yeseva'), url('./resources/fonts/display/YesevaOne-Regular.ttf'), format('truetype');
-}
-
-@font-face {
-  font-family: 'Roboto';
-  src: local('Roboto'), url('./resources/fonts/bread/Roboto-Regular.ttf'), format('truetype');
-}
-
-@font-face {
-  font-family: 'Nunito';
-  src: local('Nunito'), url('./resources/fonts/headings/Nunito-Regular.ttf'), format('truetype');
-}

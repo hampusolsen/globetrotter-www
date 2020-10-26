@@ -1,111 +1,103 @@
 import styled from "styled-components";
-import {
-  calcViewHeight,
-  color,
-  font,
-  media
-} from "../../../resources/style/variables.style";
+import { color, font, media } from "../../../resources/style/variables.style";
+import logo from "../../../resources/svg/logo.svg";
+import mountains from "../../../resources/svg/mountains.svg";
 
-const WelcomeLayout = styled.div`
+const WelcomeViewLayout = styled.div<{
+  viewport: { height: number; width: number };
+}>`
   position: relative;
-  ${media.phone} {
-    height: ${calcViewHeight(100)}px;
+  height: ${({ viewport }) => viewport.height}px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  ${media.tablet} {
+    min-height: 100vh;
   }
 
   header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     position: relative;
-    background-color: ${color.darkblue};
-    overflow: hidden;
-    height: ${calcViewHeight(55)}px;
+    height: 55%;
+    width: 100%;
+    background: url(${logo}), url(${mountains}), ${color.darkblue};
+    background-repeat: no-repeat;
+    background-size: 54px, 150%;
+    background-position: top 16px left 16px, bottom;
 
-    button {
-      position: absolute;
-      right: 24px;
-      top: 24px;
+    ${media.tablet} {
+      background-size: 200px, contain;
+      background-position: center 40%, bottom;
     }
 
-    svg:nth-of-type(1) {
-      position: absolute;
-      height: 70%;
-      bottom: 0;
-      ${media.phone} {
-        transform: translateX(-25%);
+    ${media.desktop} {
+      background-size: 300px, contain;
+    }
+
+    button {
+      margin: 24px 24px 0 auto;
+    }
+
+    section {
+      display: none;
+
+      ${media.tablet} {
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: block;
+        background-color: rgba(0, 0, 0, 0.65);
+        width: 500px;
+        margin: 36px auto 0;
+        padding: 24px;
+        box-shadow: 0 -12px 24px 0 rgba(0, 0, 0, 0.22);
+        box-sizing: border-box;
+      }
+
+      h1,
+      h2 {
+        color: ${color.smokewhite};
+        text-align: center;
+        font-weight: bold;
+      }
+
+      h1 {
+        font-family: ${font.family.display};
+        font-size: 3.7rem;
+      }
+
+      h2 {
+        margin-top: 8px;
+        font-family: ${font.family.heading};
+        font-size: 0.7rem;
+        text-transform: uppercase;
       }
     }
 
-    svg:nth-of-type(2) {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      height: 45%;
+    hr {
+      box-sizing: border-box;
+      margin: 0;
+      width: 100%;
+      border: 24px solid white;
+      border-radius: 12px 12px 0 0;
+      border-top-color: white;
+      border-bottom-width: 0;
     }
   }
 
   main {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    background-color: white;
-    ${media.phone} {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 50%;
-      border-radius: 20px 20px 0 0;
-    }
-
-    div {
-      position: relative;
-
-      span {
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-transform: uppercase;
-        background-color: white;
-        border-radius: 50%;
-        border: 1px solid ${color.grey};
-        padding: 12px;
-        font-family: ${font.heading.family};
-      }
-
-      hr {
-        width: 100vw;
-        margin: 0;
-        border-top-width: 1px;
-        border-bottom-width: 0;
-        border-style: solid;
-        border-color: black;
-        border-image: linear-gradient(
-            to right,
-            white,
-            white,
-            ${color.grey},
-            white,
-            white
-          )
-          100;
-      }
-    }
-
-    section {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-      background-color: ${color.lightgrey};
-      padding: 38px 24px 24px;
-
-      button {
-        width: 40%;
-        display: inline;
-      }
+    align-items: flex-end;
+    ${media.tablet} {
+      align-items: flex-start;
     }
   }
 `;
 
-export default WelcomeLayout;
+export default WelcomeViewLayout;

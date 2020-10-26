@@ -11,6 +11,7 @@ export interface IUserData {
 }
 
 export interface IUserState {
-  data: IUserData;
+  data: IUserData | undefined;
   status: RequestStatus;
+  isAuthenticated: boolean;
 }

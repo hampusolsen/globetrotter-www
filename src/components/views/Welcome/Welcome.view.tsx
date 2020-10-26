@@ -1,25 +1,25 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
-import { color } from "../../../resources/style/variables.style";
-import Logo from "../../common/gfx/Logo.gfx";
-import Mountains from "../../common/gfx/Mountains.gfx";
-import Button from "../../common/ia/Button/Button.ia";
-import WelcomeLayout from "./Welcome.style";
+import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useViewportSize } from "../../../resources/util/hooks";
+import AuthSection from "./sub-components/AuthSection";
+import Header from "./sub-components/Header";
+import WelcomeViewLayout from "./Welcome.style";
 
 const WelcomeView: React.FC = () => {
+  const viewport = useViewportSize();
+  const [, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    setSearchParams("p=login");
+  }, [setSearchParams]);
+
   return (
-    <WelcomeLayout>
-      <header>
-        <Button filled color={color.lightgreen}>
-          SIGN UP
-        </Button>
-        <Mountains />
-        <Logo />
-      </header>
+    <WelcomeViewLayout viewport={viewport}>
+      <Header />
       <main>
-        <Outlet />
+        <AuthSection />
       </main>
-    </WelcomeLayout>
+    </WelcomeViewLayout>
   );
 };
 

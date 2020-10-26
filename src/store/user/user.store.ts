@@ -14,7 +14,8 @@ const userData: IUserData = {
 
 const initialState: IUserState = {
   data: userData,
-  status: IDLE
+  status: IDLE,
+  isAuthenticated: false
 };
 
 const userSlice = createSlice({

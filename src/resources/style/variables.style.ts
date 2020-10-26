@@ -3,19 +3,18 @@
  */
 
 const size = {
-  phone: "425px",
+  phone: "426px",
   tablet: "768px",
   laptop: "1024px",
   desktop: "1440px"
 };
 
-const formatMediaQuery = (size: string) => `@media (max-width: ${size})`;
+const formatMediaQuery = (size: string) => `@media (min-width: ${size})`;
 
 export const media = {
-  phone: formatMediaQuery(size.phone),
-  tablet: formatMediaQuery(size.tablet),
-  laptop: formatMediaQuery(size.laptop),
-  desktop: formatMediaQuery(size.desktop)
+  tablet: formatMediaQuery(size.phone),
+  laptop: formatMediaQuery(size.tablet),
+  desktop: formatMediaQuery(size.laptop)
 };
 
 /**
@@ -63,31 +62,9 @@ export const font = {
       phone: 0.76
     }
   },
-  bread: {
-    family: "Roboto",
-    size: {
-      phone: 0.85,
-      tablet: 0.92,
-      laptop: 1,
-      desktop: 1.2
-    }
-  },
-  heading: {
-    family: "Nunito",
-    size: {
-      phone: 0.85,
-      tablet: 0.92,
-      laptop: 1,
-      desktop: 1.2
-    }
-  },
-  display: {
-    family: "Yeseva",
-    size: {
-      phone: 0.85,
-      tablet: 0.92,
-      laptop: 1,
-      desktop: 1.2
-    }
+  family: {
+    display: "Yeseva One, cursive",
+    heading: "Nunito, sans-serif",
+    bread: "Roboto, sans-serif"
   }
 };
