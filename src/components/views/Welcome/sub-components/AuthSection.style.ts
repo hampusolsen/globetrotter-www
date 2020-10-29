@@ -207,7 +207,7 @@ const StyledAuthSection = styled.section`
       transform: translateX(-50%);
     }
 
-    button {
+    a {
       height: 36px;
       background: none;
       border: none;
@@ -216,7 +216,6 @@ const StyledAuthSection = styled.section`
       margin: 0;
       display: flex;
       width: 240px;
-      cursor: pointer;
 
       &:first-of-type {
         margin-bottom: 4px;

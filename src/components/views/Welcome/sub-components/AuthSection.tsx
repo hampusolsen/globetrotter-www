@@ -9,22 +9,23 @@ import StyledAuthSection from "./AuthSection.style";
 const AuthSection: React.FC = () => {
   const [searchParams] = useSearchParams();
   const page = searchParams.get("p");
+
   return (
     <StyledAuthSection>
       <div>{page === "login" ? <Login /> : <Signup />}</div>
       <div>
-        <button type="button">
+        <a href="http://localhost:3008/api/security/google">
           <span>
             <GooglePlusIcon />
           </span>
           <span>SIGN IN WITH GOOGLE</span>
-        </button>
-        <button type="button">
+        </a>
+        <a href="http://localhost:3008/api/security/facebook">
           <span>
             <FacebookIcon />
           </span>
           <span>SIGN IN WITH FACEBOOK</span>
-        </button>
+        </a>
       </div>
     </StyledAuthSection>
   );
