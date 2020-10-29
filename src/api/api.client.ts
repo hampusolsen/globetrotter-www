@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import { IAPIClient } from "./api.types";
+import { IAPIClient, LocalCredentials } from "./api.types";
 
 class APIClient implements IAPIClient {
   #client = Axios.create({
@@ -7,8 +7,26 @@ class APIClient implements IAPIClient {
     withCredentials: true
   });
 
-  getUser(url: string): Promise<AxiosResponse> {
-    return this.#client.get(url);
+  getCurrentUser(): Promise<AxiosResponse> {
+    return this.#client.get("/user/current");
+  }
+
+  authenticateLocally(credentials: LocalCredentials): Promise<AxiosResponse> {
+    return this.#client.post("/security/local/authenticate", credentials);
+  }
+
+  registerNewUserLocally(
+    credentials: LocalCredentials
+  ): Promise<AxiosResponse> {
+    return this.#client.post("/security/local/register", credentials);
+  }
+
+  authenticateWithGoogle() {
+    return this.#client.get("/security/google");
+  }
+
+  authenticateWithFacebook() {
+    return this.#client.get("/security/facebook");
   }
 }
 

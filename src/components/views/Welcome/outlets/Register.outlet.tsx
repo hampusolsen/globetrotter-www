@@ -1,18 +1,23 @@
+/* eslint-disable no-console */
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
 import * as yup from "yup";
+import API from "../../../../api/api.client";
 import Button from "../../../common/ia/Button/Button.ia";
+import ConfirmPasswordIcon from "../../../common/icons/ConfirmPassword.icon";
 import EmailIcon from "../../../common/icons/Email.icon";
 import KeyIcon from "../../../common/icons/Key.icon";
 
 interface SignupFormValues {
   email: string;
   password: string;
+  repassword: string;
 }
 
 const initialValues: SignupFormValues = {
   email: "",
-  password: ""
+  password: "",
+  repassword: ""
 };
 
 const signupValidationSchema = yup.object().shape({
@@ -27,17 +32,26 @@ const signupValidationSchema = yup.object().shape({
     .matches(
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g,
       "Must include uppercase, lowercase and digits."
-    )
+    ),
+  repassword: yup
+    .string()
+    .required()
+    .equals([yup.ref("password")], "Passwords must match.")
 });
 
 const Signup: React.FC = () => {
   async function handleSubmit(
-    values: SignupFormValues,
+    { email, password }: SignupFormValues,
     actions: FormikHelpers<SignupFormValues>
   ) {
     actions.setSubmitting(true);
-    // eslint-disable-next-line no-console
-    console.log(values);
+
+    try {
+      const { data } = await API.registerNewUserLocally({ email, password });
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   return (
@@ -56,11 +70,7 @@ const Signup: React.FC = () => {
               className={errors.email && touched.email ? "error" : ""}
             >
               <EmailIcon />
-              <Field
-                name="email"
-                id="email"
-                placeholder={!errors.email && "your@email.com"}
-              />
+              <Field name="email" id="email" placeholder="your@email.com" />
               {errors.email && touched.email && <span>{errors.email}</span>}
             </label>
             <label
@@ -76,6 +86,21 @@ const Signup: React.FC = () => {
               />
               {errors.password && touched.password && (
                 <span>{errors.password}</span>
+              )}
+            </label>
+            <label
+              htmlFor="repassword"
+              className={errors.repassword && touched.repassword ? "error" : ""}
+            >
+              <ConfirmPasswordIcon />
+              <Field
+                type="password"
+                name="repassword"
+                id="repassword"
+                placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+              />
+              {errors.repassword && touched.repassword && (
+                <span>{errors.repassword}</span>
               )}
             </label>
             <Button type="submit" outlined>

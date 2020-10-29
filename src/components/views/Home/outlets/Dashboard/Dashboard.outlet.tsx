@@ -1,7 +1,7 @@
 import React from "react";
 
 const Dashboard: React.FC = () => {
-  return <main />;
+  return <div />;
 };
 
 export default Dashboard;

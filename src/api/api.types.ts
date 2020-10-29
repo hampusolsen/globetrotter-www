@@ -16,8 +16,22 @@ export interface IErrorResponseData {
 
 export type ErrorResponse = AxiosResponse<IErrorResponseData>;
 
-export type TestResponse = AxiosResponse<{ hello: string }>;
+export type LocalCredentials = {
+  email: string;
+  password: string;
+};
 
 export interface IAPIClient {
-  getUser: (url: string) => Promise<AxiosResponse | ErrorResponse>;
+  getCurrentUser: () => Promise<AxiosResponse | ErrorResponse>;
+
+  authenticateLocally: (
+    credentials: LocalCredentials
+  ) => Promise<AxiosResponse | ErrorResponse>;
+
+  registerNewUserLocally: (
+    credentials: LocalCredentials
+  ) => Promise<AxiosResponse | ErrorResponse>;
+
+  authenticateWithGoogle: () => Promise<AxiosResponse | ErrorResponse>;
+  authenticateWithFacebook: () => Promise<AxiosResponse | ErrorResponse>;
 }

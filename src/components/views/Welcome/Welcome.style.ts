@@ -98,6 +98,12 @@ const WelcomeViewLayout = styled.div<{
       align-items: flex-start;
     }
   }
+
+  small {
+  }
+
+  footer {
+  }
 `;
 
 export default WelcomeViewLayout;

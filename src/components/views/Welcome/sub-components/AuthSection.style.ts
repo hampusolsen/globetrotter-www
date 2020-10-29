@@ -100,27 +100,21 @@ const StyledAuthSection = styled.section`
         border: 1px solid grey;
         background-color: ${color.lightgrey};
         height: 36px;
+        margin: 32px 0;
         box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.08),
           -2px -2px 5px 0 rgba(0, 0, 0, 0.12);
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-weight: bold;
 
-        &:first-of-type {
-          margin: 32px 0;
+        &::placeholder {
+          font-weight: bold;
+          letter-spacing: 1px;
+          font-size: 1rem;
         }
 
-        &:last-of-type {
-          margin-bottom: 32px;
-
-          input {
-            font-weight: bold;
-            letter-spacing: 1px;
-            font-weight: bold;
-
-            &::placeholder {
-              font-weight: bold;
-              letter-spacing: 1px;
-              font-size: 1rem;
-            }
-          }
+        &:first-of-type {
+          margin-top: 16px;
         }
 
         svg {
@@ -140,20 +134,12 @@ const StyledAuthSection = styled.section`
 
           &::placeholder {
             font-family: ${font.family.heading};
+            opacity: 0.7;
           }
 
           &:focus::placeholder {
             visibility: hidden;
           }
-        }
-
-        span {
-          position: absolute;
-          color: red;
-          width: 100%;
-          bottom: -18px;
-          font-size: 0.72rem;
-          font-family: ${font.family.bread};
         }
 
         &.error {
@@ -168,6 +154,17 @@ const StyledAuthSection = styled.section`
 
           svg {
             fill: red;
+          }
+
+          span {
+            position: absolute;
+            color: red;
+            width: 100%;
+            bottom: -16px;
+            left: 4px;
+            font-size: 0.65rem;
+            font-family: ${font.family.bread};
+            font-weight: normal;
           }
         }
       }

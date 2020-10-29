@@ -63,11 +63,7 @@ const Login: React.FC = () => {
               className={errors.email && touched.email ? "error" : ""}
             >
               <EmailIcon />
-              <Field
-                name="email"
-                id="email"
-                placeholder={!errors.email && "your@email.com"}
-              />
+              <Field name="email" id="email" placeholder="your@email.com" />
               {errors.email && touched.email && <span>{errors.email}</span>}
             </label>
             <label
