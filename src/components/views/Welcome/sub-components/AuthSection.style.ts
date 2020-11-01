@@ -208,14 +208,15 @@ const StyledAuthSection = styled.section`
     }
 
     a {
-      height: 36px;
-      background: none;
-      border: none;
-      outline: none;
-      padding: 0;
-      margin: 0;
       display: flex;
       width: 240px;
+      height: 36px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      outline: none;
+      background: none;
+      text-decoration: none;
 
       &:first-of-type {
         margin-bottom: 4px;
@@ -250,6 +251,7 @@ const StyledAuthSection = styled.section`
           flex-grow: 1;
           padding: 0 8px;
           font-size: 0.75rem;
+          font-family: ${font.family.heading};
         }
       }
     }

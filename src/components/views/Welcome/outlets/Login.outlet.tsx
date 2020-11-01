@@ -1,7 +1,8 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
+import API from "../../../../api/api.client";
 import Button from "../../../common/ia/Button/Button.ia";
 import EmailIcon from "../../../common/icons/Email.icon";
 import KeyIcon from "../../../common/icons/Key.icon";
@@ -16,7 +17,7 @@ const initialValues: LoginFormValues = {
   password: ""
 };
 
-const signupValidationSchema = yup.object().shape({
+const loginValidationSchema = yup.object().shape({
   email: yup
     .string()
     .required("Email is required.")
@@ -32,15 +33,21 @@ const signupValidationSchema = yup.object().shape({
 });
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
   async function handleSubmit(
-    values: LoginFormValues,
+    credentials: LoginFormValues,
     actions: FormikHelpers<LoginFormValues>
   ) {
     actions.setSubmitting(true);
-    // eslint-disable-next-line no-console
-    console.log(values);
+
+    const response = await API.authenticateLocally(credentials);
+
+    if (response.status === 204) navigate("/");
+    /**
+     * @TODO Should show error message in notification bar.
+     */
   }
 
   return (
@@ -53,7 +60,7 @@ const Login: React.FC = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={signupValidationSchema}
+        validationSchema={loginValidationSchema}
         validateOnChange
       >
         {({ errors, touched, isSubmitting }) => (

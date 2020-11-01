@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import React from "react";
+import { useNavigate } from "react-router";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
 import Button from "../../../common/ia/Button/Button.ia";
@@ -40,18 +41,17 @@ const signupValidationSchema = yup.object().shape({
 });
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
+
   async function handleSubmit(
     { email, password }: SignupFormValues,
     actions: FormikHelpers<SignupFormValues>
   ) {
     actions.setSubmitting(true);
 
-    try {
-      const { data } = await API.registerNewUserLocally({ email, password });
-      console.log(data);
-    } catch (error) {
-      console.log(error.message);
-    }
+    const { status } = await API.registerLocally({ email, password });
+
+    if (status === 204) navigate("/");
   }
 
   return (

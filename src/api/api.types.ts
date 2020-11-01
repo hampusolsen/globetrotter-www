@@ -28,7 +28,7 @@ export interface IAPIClient {
     credentials: LocalCredentials
   ) => Promise<AxiosResponse | ErrorResponse>;
 
-  registerNewUserLocally: (
+  registerLocally: (
     credentials: LocalCredentials
   ) => Promise<AxiosResponse | ErrorResponse>;
 

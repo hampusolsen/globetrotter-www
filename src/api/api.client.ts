@@ -3,8 +3,8 @@ import { IAPIClient, LocalCredentials } from "./api.types";
 
 class APIClient implements IAPIClient {
   #client = Axios.create({
-    baseURL: process.env.REACT_APP_API_URL
-    // withCredentials: true
+    baseURL: process.env.REACT_APP_API_URL,
+    withCredentials: true
   });
 
   getCurrentUser(): Promise<AxiosResponse> {
@@ -15,9 +15,7 @@ class APIClient implements IAPIClient {
     return this.#client.post("/security/local/authenticate", credentials);
   }
 
-  registerNewUserLocally(
-    credentials: LocalCredentials
-  ): Promise<AxiosResponse> {
+  registerLocally(credentials: LocalCredentials): Promise<AxiosResponse> {
     return this.#client.post("/security/local/register", credentials);
   }
 

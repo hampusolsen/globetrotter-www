@@ -33,8 +33,6 @@
     "prettier"
   ],
   "rules": {
-    // Off to enable immer working in redux toolkit
-    "no-param-reassign": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
