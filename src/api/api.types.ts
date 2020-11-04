@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { FULFILLED, IDLE, PENDING, REJECTED } from "../config/constants.config";
 
 export type RequestStatus =
@@ -14,7 +14,15 @@ export interface IErrorResponseData {
   name: string;
 }
 
-export type ErrorResponse = AxiosResponse<IErrorResponseData>;
+export type ErrorResponse = AxiosError<IErrorResponseData>;
+
+export type UserData = {
+  username: string;
+};
+
+export interface IUserResponseData extends AxiosResponse {
+  data: UserData;
+}
 
 export type LocalCredentials = {
   email: string;

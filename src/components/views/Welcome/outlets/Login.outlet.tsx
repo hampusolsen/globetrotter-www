@@ -3,6 +3,7 @@ import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
+import RoutePaths from "../../../../config/router.config";
 import Button from "../../../common/ia/Button/Button.ia";
 import EmailIcon from "../../../common/icons/Email.icon";
 import KeyIcon from "../../../common/icons/Key.icon";
@@ -42,11 +43,11 @@ const Login: React.FC = () => {
   ) {
     actions.setSubmitting(true);
 
-    const response = await API.authenticateLocally(credentials);
+    const { status } = await API.authenticateLocally(credentials);
 
-    if (response.status === 204) navigate("/");
+    if (status === 204) navigate(RoutePaths.ROOT);
     /**
-     * @TODO Should show error message in notification bar.
+     * @TODO Should show error message in a notification.
      */
   }
 

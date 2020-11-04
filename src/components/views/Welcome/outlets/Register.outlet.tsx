@@ -4,6 +4,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
+import RoutePaths from "../../../../config/router.config";
 import Button from "../../../common/ia/Button/Button.ia";
 import ConfirmPasswordIcon from "../../../common/icons/ConfirmPassword.icon";
 import EmailIcon from "../../../common/icons/Email.icon";
@@ -51,7 +52,10 @@ const Signup: React.FC = () => {
 
     const { status } = await API.registerLocally({ email, password });
 
-    if (status === 204) navigate("/");
+    if (status === 204) navigate(RoutePaths.ROOT);
+    /**
+     * @TODO Should show error message in notification.
+     */
   }
 
   return (

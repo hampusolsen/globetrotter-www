@@ -1116,7 +1116,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.10.5", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.1", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.10.5", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4":
   version "7.12.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.1.tgz#b4116a6b6711d010b2dad3b7b6e43bf1b9954740"
   integrity sha512-J5AIf3vPj3UwXaAzb5j1xM4WAQDX3EMgemF8rjCP3SoW09LfRKAXQKt6CoVYl230P6iWdRcBbnLDDdnqWxZSCA==
@@ -7756,6 +7756,13 @@ jest@^26.5.3:
     import-local "^3.0.2"
     jest-cli "^26.5.3"
 
+jotai@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-0.10.3.tgz#c1ca00a4da149aa5aacb346d6273305dddbe8c1d"
+  integrity sha512-MRFdjEbqgnX7F2Zz0h4PUs995UPURQxskXPvnlAzJzXkvhJJWcErTHJx5aAMbnzxhkvTuIaBS3b3TRdOHG++iw==
+  dependencies:
+    use-context-selector "1.2.10"
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -10351,6 +10358,13 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-query@^2.26.1:
+  version "2.26.1"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-2.26.1.tgz#9e6c47384a40e3323da4be961553943998784aa4"
+  integrity sha512-7J280iWlb7LZW1eGvOnZwm4logE5Wpq+0rHHcnNjzpK3TW1pAPaPQYp3yE2Z4j5FOtWYhK64hoK2IsVOUCbRRw==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+
 react-router-dom@^6.0.0-beta.0:
   version "6.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.0.0-beta.0.tgz#9dcc8555365f22f7fbd09f26b6b82543f3eb97d6"
@@ -12225,6 +12239,11 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
+
+use-context-selector@1.2.10:
+  version "1.2.10"
+  resolved "https://registry.yarnpkg.com/use-context-selector/-/use-context-selector-1.2.10.tgz#47230099cd381119ae1c0f4a44737f336932aec0"
+  integrity sha512-gSKcvwl2I683GY5JG/ixsVDeVsIdEdLJz3ccl7y1KaKJqXitX2PjC0Z1F0LEtni1pc7u1J3cy5dHT8+MI69naA==
 
 use@^3.1.0:
   version "3.1.1"

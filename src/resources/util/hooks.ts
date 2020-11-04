@@ -14,7 +14,9 @@ export const useTrailingSlug = (): string => {
 };
 
 /**
+ * Let's you use current viewport sizes after window has been resized.
  *
+ * @returns object. { height: number, width: number }
  */
 export const useViewportSize = (): {
   height: number;
