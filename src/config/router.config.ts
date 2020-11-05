@@ -1,6 +1,8 @@
 enum RoutePaths {
   ROOT = "/",
-  WILDCARD = "*"
+  WILDCARD = "*",
+  MAP = "map",
+  MY = "my"
 }
 
 export default RoutePaths;

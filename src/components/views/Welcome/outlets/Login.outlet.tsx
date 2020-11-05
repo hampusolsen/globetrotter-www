@@ -45,7 +45,7 @@ const Login: React.FC = () => {
 
     const { status } = await API.authenticateLocally(credentials);
 
-    if (status === 204) navigate(RoutePaths.ROOT);
+    if (status === 204) navigate(RoutePaths.MY);
     /**
      * @TODO Should show error message in a notification.
      */

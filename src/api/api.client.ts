@@ -1,5 +1,5 @@
 import Axios, { AxiosResponse } from "axios";
-import { IAPIClient, LocalCredentials } from "./api.types";
+import { IAPIClient, LocalCredentials, UserData } from "./api.types";
 
 class APIClient implements IAPIClient {
   #client = Axios.create({
@@ -7,8 +7,14 @@ class APIClient implements IAPIClient {
     withCredentials: true
   });
 
-  getCurrentUser(): Promise<AxiosResponse> {
-    return this.#client.get("/user/current");
+  async fetchUserProfile(userId: string | undefined): Promise<UserData> {
+    if (userId) {
+      const { data } = await this.#client.get(`/user/profile/${userId}`);
+      return data;
+    }
+
+    const { data } = await this.#client.get("/user/profile/");
+    return data;
   }
 
   authenticateLocally(credentials: LocalCredentials): Promise<AxiosResponse> {

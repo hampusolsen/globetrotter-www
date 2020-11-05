@@ -1,11 +1,4 @@
 import { AxiosError, AxiosResponse } from "axios";
-import { FULFILLED, IDLE, PENDING, REJECTED } from "../config/constants.config";
-
-export type RequestStatus =
-  | typeof IDLE
-  | typeof PENDING
-  | typeof FULFILLED
-  | typeof REJECTED;
 
 export interface IErrorResponseData {
   status: string;
@@ -17,12 +10,10 @@ export interface IErrorResponseData {
 export type ErrorResponse = AxiosError<IErrorResponseData>;
 
 export type UserData = {
-  username: string;
+  displayName: string;
 };
 
-export interface IUserResponseData extends AxiosResponse {
-  data: UserData;
-}
+export type UseProfileResponse = AxiosResponse<UserData>;
 
 export type LocalCredentials = {
   email: string;
@@ -30,7 +21,7 @@ export type LocalCredentials = {
 };
 
 export interface IAPIClient {
-  getCurrentUser: () => Promise<AxiosResponse | ErrorResponse>;
+  fetchUserProfile: (id?: string) => Promise<UserData>;
 
   authenticateLocally: (
     credentials: LocalCredentials

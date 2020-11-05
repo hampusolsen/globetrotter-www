@@ -1,10 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
 
-const HomeView: React.FC = () => (
-  <div>
-    <Outlet />
-  </div>
-);
+const HomeView: React.FC = () => <div>Hemvy</div>;
 
 export default HomeView;
