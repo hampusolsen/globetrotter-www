@@ -21,11 +21,15 @@ const Wrapper = styled.nav`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  a {
+    transition: fill 0.2s;
+  }
 `;
 
 const menuItems = [
   { name: "map", to: RoutePaths.MAP, Icon: MapIcon },
-  { name: "add_travel", to: RoutePaths.ADD_TRAVEL, Icon: AddIcon },
+  { name: "add_travel", to: RoutePaths.ADD, Icon: AddIcon },
   { name: "my_profile", to: RoutePaths.MY, Icon: ProfileIcon }
 ];
 

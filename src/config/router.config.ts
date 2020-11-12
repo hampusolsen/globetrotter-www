@@ -3,7 +3,8 @@ enum RoutePaths {
   WILDCARD = "*",
   MAP = "/map",
   MY = "/my",
-  ADD_TRAVEL = "/travel/new"
+  EDIT = "edit",
+  ADD = "/travel/new"
 }
 
 export default RoutePaths;
