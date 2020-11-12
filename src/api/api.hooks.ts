@@ -25,11 +25,11 @@ export function useRegisterUser(): MutationResultPair<
   );
 }
 
-export function useProfile(id?: string): QueryResult<UserData, Error> {
+export function useProfile(): QueryResult<UserData, Error> {
   const [, setProfile] = useAtom(profileState);
   const navigate = useNavigate();
 
-  return useQuery("profile", () => API.fetchUserProfile(id), {
+  return useQuery("profile", () => API.fetchUserProfile(), {
     retry: false,
     refetchOnMount: false,
     onSuccess: (profile) => {

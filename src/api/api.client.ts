@@ -7,7 +7,7 @@ class APIClient implements IAPIClient {
     withCredentials: true
   });
 
-  async fetchUserProfile(userId: string | undefined): Promise<UserData> {
+  async fetchUserProfile(userId?: string): Promise<UserData> {
     if (userId) {
       const { data } = await this.#client.get(`/user/profile/${userId}`);
       return data;

@@ -1,15 +1,9 @@
-import React, { ReactNode } from "react";
-import { useNavigate } from "react-router";
+import React from "react";
 import { useProfile } from "../api/api.hooks";
-import RoutePaths from "../config/router.config";
+import { ChildrenOnlyProps } from "../resources/types/commonProps";
 
-interface Props {
-  children: ReactNode;
-}
-
-const RouteGuard: React.FC<Props> = ({ children }) => {
+const RouteGuard: React.FC<ChildrenOnlyProps> = ({ children }) => {
   const { data, error, isLoading } = useProfile();
-  const navigate = useNavigate();
 
   if (isLoading) {
     // eslint-disable-next-line no-console
@@ -23,8 +17,7 @@ const RouteGuard: React.FC<Props> = ({ children }) => {
 
   if (error) {
     // eslint-disable-next-line no-console
-    console.error("error", error);
-    navigate(RoutePaths.ROOT);
+    console.error("error loading profile");
   }
 
   return <>{children}</>;

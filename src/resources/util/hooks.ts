@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import debounceFunction from "./helpers";
 
 export const useTrailingSlug = (): string => {
   const [trailingSlug, setTrailingSlug] = useState("");
@@ -28,12 +29,15 @@ export const useViewportSize = (): {
   });
 
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = debounceFunction(() => {
       setViewportSize({
         height: window.innerHeight,
         width: window.innerWidth
       });
-    };
+
+      // eslint-disable-next-line no-console
+      console.log("fires");
+    }, 150);
 
     window.addEventListener("resize", handleResize);
 
