@@ -4,6 +4,7 @@ import { ChildrenOnlyProps } from "../../../resources/types/commonProps";
 import { useViewportSize } from "../../../resources/util/hooks";
 
 const Wrapper = styled.div<{ height: number; width: number }>`
+  overflow: hidden;
   position: absolute;
   top: 0;
   left: 0;

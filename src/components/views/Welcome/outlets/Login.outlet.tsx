@@ -84,6 +84,7 @@ const Login: React.FC = () => {
                 name="password"
                 id="password"
                 placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+                autoComplete="true"
               />
               {errors.password && touched.password && (
                 <span>{errors.password}</span>

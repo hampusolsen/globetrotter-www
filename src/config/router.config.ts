@@ -1,5 +1,6 @@
 enum RoutePaths {
   ROOT = "/",
+  CURRENT_ROOT = ".",
   WILDCARD = "*",
   MAP = "/map",
   MY = "/my",

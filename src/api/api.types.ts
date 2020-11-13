@@ -11,6 +11,10 @@ export type ErrorResponse = AxiosError<IErrorResponseData>;
 
 export type UserData = {
   displayName: string;
+  pictureUrl?: string;
+  followers: [];
+  following: [];
+  travels: [];
 };
 
 export type UseProfileResponse = AxiosResponse<UserData>;
