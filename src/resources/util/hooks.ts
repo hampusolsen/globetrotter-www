@@ -34,9 +34,6 @@ export const useViewportSize = (): {
         height: window.innerHeight,
         width: window.innerWidth
       });
-
-      // eslint-disable-next-line no-console
-      console.log("fires");
     }, 150);
 
     window.addEventListener("resize", handleResize);

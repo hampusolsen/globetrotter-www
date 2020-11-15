@@ -28,6 +28,18 @@ const Wrapper = styled.div<Omit<Props, "source">>`
   `}
 
   ${({ size }) =>
+    size === "medium" &&
+    `
+    height: 42px;
+    width: 42px;
+
+    svg {
+      height: 44px;
+      width: 44px;
+    }
+  `}
+
+  ${({ size }) =>
     size === "large" &&
     `
     height: 70px;
@@ -38,16 +50,22 @@ const Wrapper = styled.div<Omit<Props, "source">>`
       width: 72px;
     }
   `}
+
+  img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+  }
 `;
 
 interface Props {
-  size: "small" | "large";
+  size?: "small" | "medium" | "large";
   source?: string;
 }
 
-const ProfilePicture: React.FC<Props> = ({ source, ...rest }) => {
+const ProfilePicture: React.FC<Props> = ({ source, size }) => {
   return (
-    <Wrapper {...rest}>
+    <Wrapper size={size || "medium"}>
       {source ? <img src={source} alt="profile" /> : <ProfileIcon />}
     </Wrapper>
   );

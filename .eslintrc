@@ -33,6 +33,7 @@
     "prettier"
   ],
   "rules": {
+    "import/no-cycle": "off",
     "no-unused-vars": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": "off",

@@ -1,18 +1,31 @@
+import { useAtom } from "jotai";
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
+import API from "../../../../api/api.client";
 import RoutePaths from "../../../../config/router.config";
 import { color, media } from "../../../../resources/style/variables.style";
+import profileState, {
+  initialProfileState
+} from "../../../../store/profile.state";
 import EditIcon from "../../../common/icons/Edit.icon";
 import FollowersIcon from "../../../common/icons/Followers.icon";
 import LogoutIcon from "../../../common/icons/Logout.icon";
+import Text from "../../../common/Text";
 
-const Nav = styled.nav`
+const Navigation = styled.nav`
   display: flex;
   justify-content: space-evenly;
   background-color: ${color.lightgreen};
   width: 100%;
   height: 42px;
+  position: sticky;
+  top: 0;
+  z-index: 99;
+
+  ${media.tablet} {
+    height: 72px;
+  }
 `;
 
 const menuItemStyle = css`
@@ -29,11 +42,19 @@ const menuItemStyle = css`
 
   svg {
     z-index: 1;
+
+    ${media.tablet} {
+      transform: translateY(-4px);
+    }
   }
 
   ${media.tablet} {
+    text-decoration: none;
+    color: white;
+
     span {
       display: block;
+      transform: translateY(2px);
     }
   }
 `;
@@ -57,14 +78,27 @@ const Link = styled(NavLink)`
   &.active {
     position: relative;
     border-top: 3px solid ${color.green};
+    pointer-events: none;
 
     &::after {
       transform: translateY(0) scale(1);
       opacity: 1;
+
+      ${media.tablet} {
+        transform: translateY(-12px) scale(1);
+      }
     }
 
     svg {
       transform: translateY(-2px);
+
+      ${media.tablet} {
+        transform: translateY(-6px);
+      }
+    }
+
+    span {
+      transform: translateY(0);
     }
   }
 `;
@@ -78,23 +112,39 @@ const LogoutButton = styled.button`
 `;
 
 const ProfileNavigation: React.FC = () => {
-  function handleLogout() {}
+  const navigate = useNavigate();
+  const [, setProfile] = useAtom(profileState);
+
+  async function handleLogout() {
+    const successfullyLoggedOut = await API.logoutUser();
+
+    if (successfullyLoggedOut) {
+      setProfile(initialProfileState);
+      navigate(RoutePaths.ROOT);
+    }
+  }
 
   return (
-    <Nav>
-      <Link to={RoutePaths.CURRENT_ROOT} end>
+    <Navigation>
+      <Link to={RoutePaths.CONTACTS}>
         <FollowersIcon />
-        <span>Fellow Trotters</span>
+        <Text misc color="white">
+          Contacts
+        </Text>
       </Link>
-      <Link to={RoutePaths.EDIT}>
+      <Link to={`profile/${RoutePaths.EDIT}`}>
         <EditIcon />
-        <span>Edit Profile</span>
+        <Text misc color="white">
+          Edit Profile
+        </Text>
       </Link>
       <LogoutButton type="button" onClick={handleLogout}>
         <LogoutIcon />
-        <span>Log Out</span>
+        <Text misc color="white">
+          Log Out
+        </Text>
       </LogoutButton>
-    </Nav>
+    </Navigation>
   );
 };
 

@@ -1,18 +1,15 @@
 import React from "react";
 import { useProfile } from "../api/api.hooks";
 import { ChildrenOnlyProps } from "../resources/types/commonProps";
+import LoadingOverlay from "./Loader";
 
 const RouteGuard: React.FC<ChildrenOnlyProps> = ({ children }) => {
-  const { data, error, isLoading } = useProfile();
+  const { error, isLoading } = useProfile();
 
   if (isLoading) {
     // eslint-disable-next-line no-console
     console.log("isLoading", isLoading);
-  }
-
-  if (data) {
-    // eslint-disable-next-line no-console
-    console.log("data", data);
+    return <LoadingOverlay />;
   }
 
   if (error) {

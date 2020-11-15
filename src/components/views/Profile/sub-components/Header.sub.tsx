@@ -3,10 +3,11 @@ import React from "react";
 import styled from "styled-components";
 import { color, font } from "../../../../resources/style/variables.style";
 import profileState from "../../../../store/profile.state";
+import Text from "../../../common/Text";
 import ProfilePicture from "../../../modules/ProfilePicture/ProfilePicture.module";
 
 const Header = styled.header`
-  height: 200px;
+  min-height: 200px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -20,7 +21,7 @@ const Header = styled.header`
     flex-direction: column;
     align-items: center;
 
-    > span {
+    > p {
       margin-top: 8px;
     }
   }
@@ -47,24 +48,27 @@ const Statistic = styled.li`
 
 const ProfileHeader: React.FC = () => {
   const [profile] = useAtom(profileState);
+  // eslint-disable-next-line no-console
+  console.log(profile);
+
   return (
     <Header>
       <div>
-        <ProfilePicture size="large" />
-        <span>{profile.displayName}</span>
+        <ProfilePicture size="large" source={profile.profile_pic} />
+        <Text>{profile.display_name}</Text>
       </div>
       <StatisticsList>
         <Statistic>
           {profile.followers ? profile.followers.length : 0}
-          <span>Followers</span>
+          <Text misc>Followers</Text>
         </Statistic>
         <Statistic>
           {profile.following ? profile.following.length : 0}
-          <span>Following</span>
+          <Text misc>Following</Text>
         </Statistic>
         <Statistic>
           {profile.travels ? profile.travels.length : 0}
-          <span>Travels</span>
+          <Text misc>Travels</Text>
         </Statistic>
       </StatisticsList>
     </Header>

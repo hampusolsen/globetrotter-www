@@ -10,12 +10,17 @@ export interface IErrorResponseData {
 export type ErrorResponse = AxiosError<IErrorResponseData>;
 
 export type UserData = {
-  displayName: string;
-  pictureUrl?: string;
+  display_name: string;
+  profile_pic?: string;
+  description?: string;
   followers: [];
   following: [];
   travels: [];
 };
+
+export type UserDetailsData = Required<
+  Pick<UserData, "display_name" | "profile_pic" | "description">
+>;
 
 export type UseProfileResponse = AxiosResponse<UserData>;
 
@@ -23,18 +28,3 @@ export type LocalCredentials = {
   email: string;
   password: string;
 };
-
-export interface IAPIClient {
-  fetchUserProfile: (id?: string) => Promise<UserData>;
-
-  authenticateLocally: (
-    credentials: LocalCredentials
-  ) => Promise<AxiosResponse | ErrorResponse>;
-
-  registerLocally: (
-    credentials: LocalCredentials
-  ) => Promise<AxiosResponse | ErrorResponse>;
-
-  authenticateWithGoogle: () => Promise<AxiosResponse | ErrorResponse>;
-  authenticateWithFacebook: () => Promise<AxiosResponse | ErrorResponse>;
-}

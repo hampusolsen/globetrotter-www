@@ -7,7 +7,7 @@ import ProfileNavigation from "./sub-components/Navigation.sub";
 
 const ProfileView: React.FC = () => {
   return (
-    <Fullscreen>
+    <Fullscreen overflow>
       <ViewWrapper center>
         <ProfileHeader />
         <ProfileNavigation />

@@ -1,9 +1,10 @@
 import { atom } from "jotai";
 import { ProfileState } from "./types.state";
 
-const initialProfileState = {
-  displayName: "",
-  pictureUrl: "",
+export const initialProfileState = {
+  display_name: "",
+  profile_pic: "",
+  description: "",
   followers: [],
   following: [],
   travels: []

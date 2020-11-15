@@ -21,8 +21,9 @@ export interface MinifiedProfile {
 }
 
 export interface ProfileState {
-  displayName: string;
-  pictureUrl?: string;
+  display_name: string;
+  description?: string;
+  profile_pic?: string;
   followers: MinifiedProfile[];
   following: MinifiedProfile[];
   travels: Travel[];

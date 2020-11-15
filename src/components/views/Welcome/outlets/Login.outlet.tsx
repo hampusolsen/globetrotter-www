@@ -41,8 +41,6 @@ const Login: React.FC = () => {
     credentials: LoginFormValues,
     actions: FormikHelpers<LoginFormValues>
   ) {
-    actions.setSubmitting(true);
-
     const { status } = await API.authenticateLocally(credentials);
 
     if (status === 204) navigate(RoutePaths.MY);

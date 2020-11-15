@@ -1,7 +1,8 @@
-import Axios, { AxiosResponse } from "axios";
-import { IAPIClient, LocalCredentials, UserData } from "./api.types";
+import Axios from "axios";
+import { EditProfileFormValues } from "../components/views/Profile/outlets/EditProfile.outlet";
+import { LocalCredentials, UserData, UserDetailsData } from "./api.types";
 
-class APIClient implements IAPIClient {
+class APIClient {
   #client = Axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     withCredentials: true
@@ -17,11 +18,21 @@ class APIClient implements IAPIClient {
     return data;
   }
 
-  authenticateLocally(credentials: LocalCredentials): Promise<AxiosResponse> {
+  async logoutUser(): Promise<boolean> {
+    try {
+      await this.#client.delete("/security/logout");
+    } catch {
+      return false;
+    }
+
+    return true;
+  }
+
+  authenticateLocally(credentials: LocalCredentials) {
     return this.#client.post("/security/local/authenticate", credentials);
   }
 
-  registerLocally(credentials: LocalCredentials): Promise<AxiosResponse> {
+  registerLocally(credentials: LocalCredentials) {
     return this.#client.post("/security/local/register", credentials);
   }
 
@@ -31,6 +42,24 @@ class APIClient implements IAPIClient {
 
   authenticateWithFacebook() {
     return this.#client.get("/security/facebook");
+  }
+
+  async updateUserProfile(
+    profile: EditProfileFormValues
+  ): Promise<UserDetailsData> {
+    const formData = new FormData();
+
+    Object.entries(profile).forEach(([key, value]) => {
+      if (value) formData.append(key, value);
+    });
+
+    const { data } = await this.#client.put("/user/profile/", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+
+    return data;
   }
 }
 
