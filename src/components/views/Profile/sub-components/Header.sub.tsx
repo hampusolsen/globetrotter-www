@@ -48,8 +48,6 @@ const Statistic = styled.li`
 
 const ProfileHeader: React.FC = () => {
   const [profile] = useAtom(profileState);
-  // eslint-disable-next-line no-console
-  console.log(profile);
 
   return (
     <Header>
@@ -75,4 +73,4 @@ const ProfileHeader: React.FC = () => {
   );
 };
 
-export default ProfileHeader;
+export default React.memo(ProfileHeader);
