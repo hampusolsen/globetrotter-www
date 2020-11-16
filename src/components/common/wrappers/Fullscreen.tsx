@@ -4,7 +4,7 @@ import { media } from "../../../resources/style/variables.style";
 import { useViewportSize } from "../../../resources/util/hooks";
 
 interface InheritedProps {
-  overflow: boolean | string;
+  overFlow?: boolean;
 }
 
 interface StyleProps extends InheritedProps {
@@ -17,30 +17,32 @@ interface Props extends InheritedProps {
 }
 
 const Wrapper = styled.div<StyleProps>`
+  display: flex;
+  flex-direction: column;
+  position: relative;
   overflow: hidden hidden;
-  position: absolute;
   top: 0;
   left: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
 
-  ${({ overflow }) =>
-    overflow &&
+  ${({ overFlow }) =>
+    overFlow &&
     `
-    overflow-x: hidden;
-    overflow-y: auto;
-  `}
+  overflow-x: hidden;
+  overflow-y: auto;
+`}
 
   ${media.tablet} {
     position: relative;
   }
 `;
 
-const Fullscreen: React.FC<Props> = ({ children, overflow = false }) => {
+const Fullscreen: React.FC<Props> = ({ children, overFlow = false }) => {
   const viewportSize = useViewportSize();
 
   return (
-    <Wrapper overflow={overflow.toString()} {...viewportSize}>
+    <Wrapper overFlow={overFlow} {...viewportSize}>
       {children}
     </Wrapper>
   );

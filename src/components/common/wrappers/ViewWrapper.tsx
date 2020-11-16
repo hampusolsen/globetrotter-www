@@ -11,6 +11,7 @@ const ViewWrapper = styled.div<Props>`
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
   ${(props) => props.center && "align-items: center;"}
   ${(props) => props.spaceBetween && "justify-content: space-between;"}
   ${(props) => props.spaceEvenly && "justify-content: space-evenly;"}
