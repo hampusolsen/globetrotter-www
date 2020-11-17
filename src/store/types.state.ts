@@ -1,13 +1,11 @@
 export interface Image {
   src: string;
-  alt: string;
 }
 
 export interface Happening {
   title: string;
   description: string;
   images: Image[];
-  date: Date;
 }
 
 export interface Travel {
