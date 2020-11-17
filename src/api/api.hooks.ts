@@ -8,16 +8,12 @@ import { UserData } from "./api.types";
 
 export function useProfile(): QueryResult<UserData, Error> {
   const [, setProfile] = useAtom(profileState);
-  const navigate = useNavigate();
 
   return useQuery("profile", () => API.fetchUserProfile(), {
     retry: false,
     refetchOnMount: false,
     onSuccess: (profile) => {
       setProfile(profile);
-    },
-    onError: () => {
-      navigate(RoutePaths.ROOT);
     }
   });
 }

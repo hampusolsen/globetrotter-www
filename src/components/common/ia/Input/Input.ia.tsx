@@ -1,8 +1,8 @@
 import { Field, FormikErrors, FormikProps, FormikTouched } from "formik";
 import React from "react";
 import styled from "styled-components";
-import { color, media } from "../../../resources/style/variables.style";
-import Text from "../Text";
+import { color, media } from "../../../../resources/style/variables.style";
+import Text from "../../Text";
 
 /**
  * Retrieves error message pertaining to specified input field.
@@ -59,7 +59,7 @@ const Label = styled.label<StyleProps>`
   input[type="file"] {
     visibility: hidden;
 
-    ~ p {
+    + p {
       font-size: 14px;
       transform: translate(54px, -50%);
     }
@@ -80,13 +80,13 @@ const Label = styled.label<StyleProps>`
       visibility: hidden;
     }
 
-    &:placeholder-shown ~ p {
+    &:placeholder-shown + p {
       transform: translateY(-50%);
       font-size: 14px;
     }
 
-    &:focus ~ p,
-    &:active ~ p {
+    &:focus + p,
+    &:active + p {
       transform: translateY(-32px);
       font-size: 10px;
 
@@ -105,6 +105,7 @@ const Label = styled.label<StyleProps>`
     font-size: 10px;
     color: ${(props) => (props.error ? color.red : "black")};
     transition: 0.18s;
+    text-transform: capitalize;
 
     ${media.tablet} {
       font-size: 12px;
@@ -120,71 +121,98 @@ const Label = styled.label<StyleProps>`
 
 type FormValues = Record<string, unknown>;
 
-type InputTypes = "text" | "email" | "password" | "file" | "number";
+type InputTypes =
+  | "text"
+  | "email"
+  | "password"
+  | "file"
+  | "number"
+  | "textarea";
 
 interface SharedInputProps {
   type?: InputTypes;
   name: string;
   label?: string;
   Icon?: React.FC;
+  multiple?: boolean;
 }
 
 type Props = SharedInputProps & FormikProps<FormValues>;
 
+/**
+ * Wrapper for Formik's `<Field />`-component.
+ *
+ * Also renders types _textarea_ and _file_.
+ */
 const Input: React.FC<Props> = (props) => {
-  const { name, type = "text", Icon, errors, touched, label } = props;
+  const {
+    name,
+    type = "text",
+    Icon,
+    errors,
+    touched,
+    label,
+    multiple = false,
+    setFieldValue
+  } = props;
   const error = retrieveInputErrorMessage(name, errors, touched);
 
-  if (type === "file") {
-    const { setFieldValue } = props;
+  switch (type) {
+    case "file":
+      return (
+        <Label htmlFor={name} type={type} error={!!error}>
+          {Icon && <Icon />}
+          <input
+            id={name}
+            name={name}
+            type={type}
+            multiple={multiple}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              const fileList = event.currentTarget.files;
 
-    return (
-      <Label htmlFor={name} type={type} error={!!error}>
-        {Icon && <Icon />}
-        <input
-          name={name}
-          id={name}
-          type={type}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            const fileList = event.currentTarget.files;
+              if (fileList) {
+                const passed = fileList.length === 1 ? fileList[0] : fileList;
+                setFieldValue(name, passed, true);
+              }
+            }}
+          />
+          <Text italic>{label || "Browse files to upload."}</Text>
+          {error && (
+            <Text misc color={color.red}>
+              {error}
+            </Text>
+          )}
+        </Label>
+      );
 
-            if (fileList) {
-              const singleFile = fileList.length === 1 && fileList[0];
+    case "textarea":
+      return (
+        <label htmlFor={name}>
+          <Text>{label || name}</Text>
+          <Field as={type} id={name} name={name} />
+        </label>
+      );
 
-              // eslint-disable-next-line no-console
-              console.log(singleFile || fileList);
-              setFieldValue(name, singleFile || fileList, true);
-            }
-          }}
-        />
-        <Text italic>{label || "Browse files to upload."}</Text>
-        {error && (
-          <Text misc color={color.red}>
-            {error}
-          </Text>
-        )}
-      </Label>
-    );
+    default:
+      return (
+        <Label htmlFor={name} type={type} error={!!error}>
+          {Icon && <Icon />}
+          <Field
+            id={name}
+            name={name}
+            type={type || "text"}
+            placeholder={name}
+            autoComplete="off"
+          />
+          <Text>{label || name}</Text>
+          {error && (
+            <Text misc color={color.red} italic>
+              {error}
+            </Text>
+          )}
+        </Label>
+      );
   }
-
-  return (
-    <Label htmlFor={name} type={type} error={!!error}>
-      {Icon && <Icon />}
-      <Field
-        id={name}
-        name={name}
-        type={type || "text"}
-        placeholder={name}
-        autoComplete="off"
-      />
-      <Text>{label || name}</Text>
-      {error && (
-        <Text misc color={color.red} italic>
-          {error}
-        </Text>
-      )}
-    </Label>
-  );
 };
 
 export default Input;

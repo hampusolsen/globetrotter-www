@@ -6,7 +6,7 @@ import * as yup from "yup";
 import API from "../../../../api/api.client";
 import profileState from "../../../../store/profile.state";
 import Button from "../../../common/ia/Button/Button.ia";
-import Input from "../../../common/ia/Input.ia";
+import Input from "../../../common/ia/Input/Input.ia";
 import UploadIcon from "../../../common/icons/Upload.icon";
 
 const validationSchema = yup.object().shape({
@@ -33,7 +33,7 @@ export type EditProfileFormValues = {
   displayName: string;
 };
 
-const ProfileEdit: React.FC = () => {
+const EditProfile: React.FC = () => {
   const [profile, setProfile] = useAtom(profileState);
 
   const initialFormValues: EditProfileFormValues = {
@@ -91,4 +91,4 @@ const ProfileEdit: React.FC = () => {
   );
 };
 
-export default ProfileEdit;
+export default EditProfile;

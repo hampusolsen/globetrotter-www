@@ -1,22 +1,26 @@
 export interface Image {
-  thumbnailUrl: string;
-  url: string;
+  src: string;
   alt: string;
 }
 
 export interface Happening {
   title: string;
+  description: string;
   images: Image[];
+  date: Date;
 }
 
 export interface Travel {
   title: string;
+  description: string;
   happenings: Happening[];
+  from_date: Date;
+  to_date: Date;
 }
 
 export interface MinifiedProfile {
-  displayName: string;
-  pictureUrl?: string;
+  display_name: string;
+  profile_pic?: string;
   id: string;
 }
 

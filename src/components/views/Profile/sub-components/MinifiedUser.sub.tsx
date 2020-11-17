@@ -58,18 +58,16 @@ interface Props {
   amicable?: boolean;
 }
 
-const MinifiedUser: React.FC<Props> = ({ name, source, id, amicable }) => {
-  return (
-    <Wrapper>
-      <ProfilePicture source={source} />
-      <Text heading>{name}</Text>
-      {amicable ? (
-        <ButtonUnfollow>Unfollow</ButtonUnfollow>
-      ) : (
-        <ButtonFollow>Follow</ButtonFollow>
-      )}
-    </Wrapper>
-  );
-};
+const MinifiedUser: React.FC<Props> = ({ name, source, amicable }) => (
+  <Wrapper>
+    <ProfilePicture source={source} />
+    <Text heading>{name}</Text>
+    {amicable ? (
+      <ButtonUnfollow>Unfollow</ButtonUnfollow>
+    ) : (
+      <ButtonFollow>Follow</ButtonFollow>
+    )}
+  </Wrapper>
+);
 
 export default MinifiedUser;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "../components/modules/Navigation/Navigation.module";
+import TravelView from "../components/views/CreateTravel/CreateTravel.view";
 import MapView from "../components/views/Map/Map.view";
 import NotFoundView from "../components/views/NotFound/NotFound.view";
 import Contacts from "../components/views/Profile/outlets/Contacts.outlet";
@@ -8,7 +9,6 @@ import EditProfile from "../components/views/Profile/outlets/EditProfile.outlet"
 import Followers from "../components/views/Profile/outlets/Followers.outlet";
 import Following from "../components/views/Profile/outlets/Following.outlet";
 import ProfileView from "../components/views/Profile/Profile.view";
-import TravelView from "../components/views/Travel/Travel.view";
 import WelcomeView from "../components/views/Welcome/Welcome.view";
 import RoutePaths from "../config/router.config";
 import RouteGuard from "./RouteGuard";
@@ -31,7 +31,9 @@ const Router = (): React.ReactElement => {
             />
           </Route>
           <Route path={RoutePaths.MAP} element={<MapView />} />
-          <Route path={RoutePaths.ADD} element={<TravelView />} />
+          <Route path={RoutePaths.TRAVEL}>
+            <Route path={RoutePaths.NEW} element={<TravelView />} />
+          </Route>
         </Routes>
       </RouteGuard>
       <Route path={RoutePaths.WILDCARD} element={<NotFoundView />} />

@@ -8,7 +8,8 @@ enum RoutePaths {
   FOLLOWERS = "followers",
   FOLLOWING = "following",
   EDIT = "edit",
-  ADD = "travel/new"
+  NEW = "new",
+  TRAVEL = "travel"
 }
 
 export default RoutePaths;

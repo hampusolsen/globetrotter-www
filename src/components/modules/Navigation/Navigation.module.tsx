@@ -29,7 +29,11 @@ const Wrapper = styled.nav`
 
 const menuItems = [
   { name: "map", to: RoutePaths.MAP, Icon: MapIcon },
-  { name: "add_travel", to: RoutePaths.ADD, Icon: AddIcon },
+  {
+    name: "add_travel",
+    to: `${RoutePaths.TRAVEL}/${RoutePaths.NEW}`,
+    Icon: AddIcon
+  },
   { name: "my_profile", to: RoutePaths.MY, Icon: ProfileIcon }
 ];
 
