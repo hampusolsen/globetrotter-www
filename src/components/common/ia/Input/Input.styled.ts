@@ -19,12 +19,19 @@ const Label = styled.label<StyleProps>`
   background-color: whitesmoke;
   border-radius: 4px;
   border: 1px solid;
-  border-color: ${(props) => (props.error ? color.red : "grey")};
+  border-color: ${({ error }) => (error ? color.red : "grey")};
   ${({ type }) =>
     type === "file" &&
     `
     margin-top: 0;
     pointer: cursor;
+  `}
+
+  ${({ type }) =>
+    type === "textarea" &&
+    `
+    background: none;
+    border: none;
   `}
 
   svg {
@@ -47,7 +54,8 @@ const Label = styled.label<StyleProps>`
 
   input[type="text"],
   input[type="password"],
-  input[type="email"] {
+  input[type="email"],
+  textarea {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -74,6 +82,23 @@ const Label = styled.label<StyleProps>`
         transform: translateY(-34px);
         font-size: 12px;
       }
+    }
+  }
+
+  textarea {
+    resize: none;
+    padding: 8px;
+    background-color: whitesmoke;
+    border: 1px solid;
+    border-color: ${({ error }) => (error ? color.red : "grey")};
+    border-radius: 4px;
+    min-height: 220px;
+    height: 100%;
+    max-height: 420px;
+
+    & ~ span {
+      position: relative;
+      top: -2px;
     }
   }
 

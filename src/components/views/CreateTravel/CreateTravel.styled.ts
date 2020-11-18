@@ -1,6 +1,6 @@
 import { Form } from "formik";
 import styled from "styled-components";
-import { color, font } from "../../../resources/style/variables.style";
+import { color } from "../../../resources/style/variables.style";
 
 export const Indicators = styled.ul`
   display: flex;
@@ -37,22 +37,14 @@ export const Indicator = styled.li`
   }
 `;
 
-export const Ball = styled.button`
+export const Ball = styled.div`
   margin: 0 auto;
   background-color: ${color.blue};
-  font-family: ${font.family.bread};
-  font-size: 12px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 20px;
   height: 20px;
   border-radius: 50%;
   box-shadow: 0 0 7px ${color.blue};
   position: relative;
-  outline: none;
-  border: none;
 
   &::before,
   &::after {

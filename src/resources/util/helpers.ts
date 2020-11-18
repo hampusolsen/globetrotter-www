@@ -1,10 +1,12 @@
-export type Procedure = (...args: any[]) => void;
+import * as yup from "yup";
+
+export type Procedure = (...args: unknown[]) => void;
 
 export type Options = {
   isImmediate: boolean;
 };
 
-export default function debounceFunction<F extends Procedure>(
+export function debounce<F extends Procedure>(
   func: F,
   waitMilliseconds = 50,
   options: Options = {
@@ -38,4 +40,12 @@ export default function debounceFunction<F extends Procedure>(
       func.apply(context, args);
     }
   };
+}
+
+export function mergeYupValidationSchemas(
+  ...schemas: yup.ObjectSchema[]
+): yup.ObjectSchema {
+  const [first, ...rest] = schemas;
+
+  return rest.reduce((merged, current) => merged.concat(current), first);
 }

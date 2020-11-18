@@ -1,6 +1,5 @@
-import { Formik, FormikHelpers, FormikProps, FormikValues } from "formik";
+import { Formik, validateYupSchema } from "formik";
 import React, { useState } from "react";
-import * as yup from "yup";
 import { color } from "../../../resources/style/variables.style";
 import { Travel } from "../../../store/types.state";
 import Button from "../../common/ia/Button/Button.ia";
@@ -11,94 +10,80 @@ import {
   Indicator,
   Indicators
 } from "./CreateTravel.styled";
-import FirstSection from "./sub-components/FirstSection.sub";
-import SecondSection from "./sub-components/SecondSection.sub";
-import ThirdSection from "./sub-components/ThirdSection.sub";
+import {
+  handleSubmit,
+  hasErrors,
+  renderStep,
+  stepValidations
+} from "./CreateTravel.util";
 
-/**
- * Renders correct step of the multi part travel form.
- *
- * @param step number
- * @param props FormikProps<FormikValues>
- *
- * @returns React.FC
- */
-function renderStep(step: number, props: FormikProps<FormikValues>) {
-  switch (step) {
-    case 0:
-      return <FirstSection {...props} />;
-    case 1:
-      return <SecondSection {...props} />;
-    case 2:
-      return <ThirdSection {...props} />;
-    default:
-      return null;
-  }
-}
-
-export interface TravelFormValues extends Omit<Travel, "happenings"> {
+export interface TravelFormValues
+  extends Pick<Travel, "title" | "description"> {
   images: undefined | FileList;
+  from_date: undefined | Date;
+  to_date: undefined | Date;
 }
 
 const initialFormValues: TravelFormValues = {
   title: "",
   description: "",
-  to_date: new Date(),
-  from_date: new Date(),
+  from_date: undefined,
+  to_date: undefined,
   images: undefined
 };
 
-const validationSchema = yup.object({
-  title: yup.string().required().min(3).max(32).label("Title"),
-  description: yup.string().notRequired().max(400).label("Description")
-});
-
 const CreateTravel: React.FC = () => {
   const [step, setStep] = useState(0);
-
-  async function handleSubmit(
-    values: TravelFormValues,
-    _actions: FormikHelpers<TravelFormValues>
-  ) {
-    // eslint-disable-next-line no-console
-    console.log(values);
-  }
 
   return (
     <Fullscreen
       style={{ padding: "26px 26px 96px", justifyContent: "space-between" }}
     >
-      <Indicators>
-        {Array.from(Array(3)).map((_, idx) => (
-          <Indicator key={`${idx + 1}`}>
-            <Ball
-              className={idx === step ? "active" : ""}
-              onClick={() => setStep(idx)}
-            />
-          </Indicator>
-        ))}
-      </Indicators>
       <Formik
         initialValues={initialFormValues}
         onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-        validateOnChange
+        validateOnChange={false}
       >
-        {(props: FormikProps<FormikValues>) => (
-          <FormWrapper>
-            {renderStep(step, props)}
-            {step < 2 && (
-              <Button filled onClick={() => setStep((step) => step + 1)}>
-                Next
-              </Button>
-            )}
-            {step === 2 && (
+        {(props) =>
+          step < 3 ? (
+            <>
+              <Indicators>
+                {Array.from(Array(3)).map((_, idx) => (
+                  <Indicator key={`${idx + 1}`}>
+                    <Ball className={idx === step ? "active" : ""} />
+                  </Indicator>
+                ))}
+              </Indicators>
+              <FormWrapper>
+                {renderStep(step)}
+                <Button
+                  filled
+                  onClick={() => {
+                    validateYupSchema(
+                      props.values,
+                      stepValidations[step].schema
+                    )
+                      .then(() => {
+                        setStep((currentStep) => currentStep + 1);
+                      })
+                      .catch((errors) => {
+                        props.setErrors(errors);
+                      });
+                  }}
+                  disabled={hasErrors(props.errors)}
+                >
+                  Next
+                </Button>
+              </FormWrapper>
+            </>
+          ) : (
+            <FormWrapper>
               <Button filled type="submit" color={color.lightgreen}>
                 Submit
               </Button>
-            )}
-          </FormWrapper>
-        )}
+            </FormWrapper>
+          )
+        }
       </Formik>
     </Fullscreen>
   );

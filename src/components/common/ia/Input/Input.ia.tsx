@@ -1,4 +1,11 @@
-import { Field, FormikErrors, FormikProps, FormikTouched } from "formik";
+import {
+  connect,
+  Field,
+  FormikContextType,
+  FormikErrors,
+  FormikTouched,
+  FormikValues
+} from "formik";
 import React from "react";
 import { color } from "../../../../resources/style/variables.style";
 import Text from "../../Text";
@@ -39,24 +46,23 @@ interface SharedInputProps {
   multiple?: boolean;
 }
 
-type Props = SharedInputProps & FormikProps<FormValues>;
+type Props = SharedInputProps & { formik: FormikContextType<FormikValues> };
 
 /**
  * Wrapper for Formik's `<Field />`-component.
  *
  * Also renders types _textarea_ and _file_.
  */
-const Input: React.FC<Props> = (props) => {
+const Input: React.FC<SharedInputProps> = (props) => {
   const {
     name,
     type = "text",
     Icon,
-    errors,
-    touched,
     label,
     multiple = false,
-    setFieldValue
-  } = props;
+    formik
+  } = props as Props;
+  const { errors, touched, setFieldValue } = formik;
   const error = retrieveInputErrorMessage(name, errors, touched);
 
   switch (type) {
@@ -90,8 +96,13 @@ const Input: React.FC<Props> = (props) => {
     case "textarea":
       return (
         <Label htmlFor={name} type={type} error={!!error}>
+          <Field as={type} id={name} name={name} placeholder={name} />
           <Text>{label || name}</Text>
-          <Field as={type} id={name} name={name} />
+          {error && (
+            <Text misc color={color.red} italic>
+              {error}
+            </Text>
+          )}
         </Label>
       );
 
@@ -117,4 +128,4 @@ const Input: React.FC<Props> = (props) => {
   }
 };
 
-export default Input;
+export default connect(Input);

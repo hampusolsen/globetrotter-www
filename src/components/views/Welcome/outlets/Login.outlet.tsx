@@ -39,7 +39,7 @@ const Login: React.FC = () => {
 
   async function handleSubmit(
     credentials: LoginFormValues,
-    actions: FormikHelpers<LoginFormValues>
+    _actions: FormikHelpers<LoginFormValues>
   ) {
     const { status } = await API.authenticateLocally(credentials);
 

@@ -64,9 +64,14 @@ const StyledButton = styled.button<IButtonProps>`
   text-transform: uppercase;
   letter-spacing: 1px;
   outline: none;
-  ${(props) => props.filled && filledStyle}
-  ${(props) => props.text && textStyle}
-  ${(props) => props.outlined && outlinedStyle}
+  ${({ filled }) => filled && filledStyle}
+  ${({ text }) => text && textStyle}
+  ${({ outlined }) => outlined && outlinedStyle}
+
+  &:disabled {
+    background-color: whitesmoke;
+    color: grey;
+  }
 `;
 
 export default StyledButton;
