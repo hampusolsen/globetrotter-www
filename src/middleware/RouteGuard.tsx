@@ -1,24 +1,34 @@
-import React from "react";
+import { useAtom } from "jotai";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProfile } from "../api/api.hooks";
+import API from "../api/api.client";
 import RoutePaths from "../config/router.config";
 import { ChildrenOnlyProps } from "../resources/types/commonProps";
+import profileState from "../store/profile.state";
 import LoadingOverlay from "./Loader";
 
 const RouteGuard: React.FC<ChildrenOnlyProps> = ({ children }) => {
-  const { isError, isLoading } = useProfile();
   const navigate = useNavigate();
+  const [, setProfile] = useAtom(profileState);
+  const [loading, setLoading] = useState(true);
 
-  if (isError) {
-    // eslint-disable-next-line no-console
-    console.error("error loading profile");
-    navigate(RoutePaths.ROOT);
-  }
+  useEffect(() => {
+    (async function authorizeUser() {
+      const data = await API.fetchUserProfile();
+
+      if (!data) {
+        navigate(RoutePaths.ROOT);
+      } else {
+        setProfile(data);
+        setLoading(false);
+      }
+    })();
+  }, [setProfile, navigate]);
 
   return (
     <>
       {children}
-      {isLoading && <LoadingOverlay />}
+      {loading && <LoadingOverlay />}
     </>
   );
 };

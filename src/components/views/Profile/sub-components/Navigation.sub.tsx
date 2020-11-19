@@ -122,9 +122,9 @@ const ProfileNavigation: React.FC = () => {
   );
 
   async function handleLogout() {
-    const successfullyLoggedOut = await API.logoutUser();
+    const userLoggedOut = await API.logoutUser();
 
-    if (successfullyLoggedOut) {
+    if (userLoggedOut) {
       setProfile(initialProfileState);
       navigate(RoutePaths.ROOT);
     }

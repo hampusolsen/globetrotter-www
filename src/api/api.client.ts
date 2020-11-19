@@ -1,4 +1,6 @@
 import Axios from "axios";
+import { TravelFormValues } from "../components/views/CreateTravel/CreateTravel.view";
+import { HappeningFormValues } from "../components/views/Map/sub-components/HappeningForm/HappeningForm.form";
 import { EditProfileFormValues } from "../components/views/Profile/outlets/EditProfile.outlet";
 import { LocalCredentials, UserData, UserDetailsData } from "./api.types";
 
@@ -58,6 +60,35 @@ class APIClient {
         "Content-Type": "multipart/form-data"
       }
     });
+
+    return data;
+  }
+
+  async createTravel(travel: TravelFormValues) {
+    const { data } = await this.#client.post("/travel", travel);
+    return data;
+  }
+
+  async updateTravel(travel: TravelFormValues) {
+    const { data } = await this.#client.put(`/travel/${travel.id}`, travel);
+    return data;
+  }
+
+  async createHappening(happening: HappeningFormValues) {
+    const formData = new FormData();
+
+    Object.entries(happening).forEach(([key, value]) => {
+      if (key === "images" && happening[key].length) {
+        happening[key].forEach((image) => formData.append(key, image));
+      } else if (value) {
+        formData.append(key, value);
+      }
+    });
+
+    const { data } = await this.#client.post(
+      `/travel/${happening.travel_id}`,
+      formData
+    );
 
     return data;
   }

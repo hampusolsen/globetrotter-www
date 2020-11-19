@@ -6,6 +6,8 @@ export interface Happening {
   title: string;
   description: string;
   images: Image[];
+  lng: number;
+  lat: number;
 }
 
 export interface Travel {
@@ -14,6 +16,7 @@ export interface Travel {
   happenings: Happening[];
   from_date: Date;
   to_date: Date;
+  id?: string;
 }
 
 export interface MinifiedProfile {

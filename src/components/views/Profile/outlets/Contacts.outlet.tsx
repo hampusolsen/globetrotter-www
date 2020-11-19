@@ -72,11 +72,17 @@ const ProfileContacts: React.FC = () => {
 
   if (matchedIndex < 0) return <Navigate to={RoutePaths.FOLLOWERS} />;
 
+  const activePath = links[matchedIndex].to;
+
   return (
     <>
       <Navigation>
         {links.map((link) => (
-          <Link key={link.to} to={link.to}>
+          <Link
+            key={link.to}
+            to={link.to}
+            className={activePath === link.to ? "active" : ""}
+          >
             <Text misc>{link.text}</Text>
           </Link>
         ))}

@@ -12,3 +12,8 @@ export const ALLOWED_IMAGE_TYPES = [
   "image/png",
   "image/jpg"
 ];
+
+export const TIME = {
+  ONE_DAY: 1000 * 60 * 60 * 24,
+  ONE_WEEK: 1000 * 60 * 60 * 24 * 7
+};

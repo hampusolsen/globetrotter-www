@@ -3,8 +3,10 @@ import { useLocation } from "react-router";
 import { debounce } from "./helpers";
 
 export const useTrailingSlug = (): string => {
-  const [trailingSlug, setTrailingSlug] = useState("");
   const { pathname } = useLocation();
+  const [trailingSlug, setTrailingSlug] = useState(
+    pathname.split("/").pop() || ""
+  );
 
   useEffect(() => {
     const newSlug = pathname.split("/").pop();

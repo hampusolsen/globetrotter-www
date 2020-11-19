@@ -1,34 +1,11 @@
-import {
-  connect,
-  Field,
-  FormikContextType,
-  FormikErrors,
-  FormikTouched,
-  FormikValues
-} from "formik";
+import { Field, useFormikContext } from "formik";
 import React from "react";
+import Datepicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { color } from "../../../../resources/style/variables.style";
+import CalendarIcon from "../../icons/Calendar.icon";
 import Text from "../../Text";
 import Label from "./Input.styled";
-
-/**
- * Retrieves error message pertaining to specified input field.
- *
- * @param fieldName string
- * @param errors FormikErrors
- * @param touched FormikTouched
- *
- * @returns message string
- */
-export function retrieveInputErrorMessage(
-  fieldName: string,
-  errors: FormikErrors<FormValues>,
-  touched: FormikTouched<FormValues>
-): string | undefined {
-  return errors[fieldName] && touched[fieldName] ? errors[fieldName] : "";
-}
-
-type FormValues = Record<string, unknown>;
 
 type InputTypes =
   | "text"
@@ -36,6 +13,7 @@ type InputTypes =
   | "password"
   | "file"
   | "number"
+  | "date"
   | "textarea";
 
 interface SharedInputProps {
@@ -46,29 +24,61 @@ interface SharedInputProps {
   multiple?: boolean;
 }
 
-type Props = SharedInputProps & { formik: FormikContextType<FormikValues> };
-
 /**
  * Wrapper for Formik's `<Field />`-component.
  *
  * Also renders types _textarea_ and _file_.
  */
-const Input: React.FC<SharedInputProps> = (props) => {
-  const {
-    name,
-    type = "text",
-    Icon,
-    label,
-    multiple = false,
-    formik
-  } = props as Props;
-  const { errors, touched, setFieldValue } = formik;
-  const error = retrieveInputErrorMessage(name, errors, touched);
+const Input: React.FC<SharedInputProps> = ({
+  name,
+  type = "text",
+  Icon,
+  label,
+  multiple = false
+}) => {
+  const { errors, touched, setFieldValue, values } = useFormikContext<
+    Record<string, unknown>
+  >();
+
+  const errorMessage = errors[name] && touched[name] ? errors[name] : "";
 
   switch (type) {
-    case "file":
+    case "date":
       return (
-        <Label htmlFor={name} type={type} error={!!error}>
+        <Label htmlFor={name} type={type} error={!!errorMessage}>
+          <CalendarIcon />
+          <Datepicker
+            id={name}
+            name={name}
+            selected={values[name] as Date}
+            onChange={(date) => setFieldValue(name, date)}
+          />
+          <Text italic>{label || name}</Text>
+          {values[name] && (
+            <Text className="readable-date">
+              {(values[name] as Date).toLocaleDateString("en-US", {
+                weekday: "long",
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+              })}
+            </Text>
+          )}
+          {errorMessage && (
+            <Text misc color={color.red}>
+              {errorMessage}
+            </Text>
+          )}
+        </Label>
+      );
+
+    case "file": {
+      const label = multiple
+        ? "Browse files to upload"
+        : "Choose file to upload";
+
+      return (
+        <Label htmlFor={name} type={type} error={!!errorMessage}>
           {Icon && <Icon />}
           <input
             id={name}
@@ -79,28 +89,32 @@ const Input: React.FC<SharedInputProps> = (props) => {
               const fileList = event.currentTarget.files;
 
               if (fileList) {
-                const passed = fileList.length === 1 ? fileList[0] : fileList;
-                setFieldValue(name, passed, true);
+                const value = multiple
+                  ? ((values[name] || []) as File[]).concat([...fileList])
+                  : fileList[0];
+
+                setFieldValue(name, value, true);
               }
             }}
           />
-          <Text italic>{label || "Browse files to upload."}</Text>
-          {error && (
+          <Text italic>{label}</Text>
+          {errorMessage && (
             <Text misc color={color.red}>
-              {error}
+              {errorMessage}
             </Text>
           )}
         </Label>
       );
+    }
 
     case "textarea":
       return (
-        <Label htmlFor={name} type={type} error={!!error}>
+        <Label htmlFor={name} type={type} error={!!errorMessage}>
           <Field as={type} id={name} name={name} placeholder={name} />
           <Text>{label || name}</Text>
-          {error && (
+          {errorMessage && (
             <Text misc color={color.red} italic>
-              {error}
+              {errorMessage}
             </Text>
           )}
         </Label>
@@ -108,7 +122,7 @@ const Input: React.FC<SharedInputProps> = (props) => {
 
     default:
       return (
-        <Label htmlFor={name} type={type} error={!!error}>
+        <Label htmlFor={name} type={type} error={!!errorMessage}>
           {Icon && <Icon />}
           <Field
             id={name}
@@ -118,9 +132,9 @@ const Input: React.FC<SharedInputProps> = (props) => {
             autoComplete="off"
           />
           <Text>{label || name}</Text>
-          {error && (
+          {errorMessage && (
             <Text misc color={color.red} italic>
-              {error}
+              {errorMessage}
             </Text>
           )}
         </Label>
@@ -128,4 +142,4 @@ const Input: React.FC<SharedInputProps> = (props) => {
   }
 };
 
-export default connect(Input);
+export default Input;

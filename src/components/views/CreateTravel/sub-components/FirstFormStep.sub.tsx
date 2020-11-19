@@ -1,8 +1,7 @@
-import { connect } from "formik";
 import React from "react";
 import Input from "../../../common/ia/Input/Input.ia";
 
-const FirstSection = () => {
+const FirstFormStep: React.FC = () => {
   return (
     <section>
       <Input name="title" />
@@ -11,4 +10,4 @@ const FirstSection = () => {
   );
 };
 
-export default connect(FirstSection);
+export default FirstFormStep;

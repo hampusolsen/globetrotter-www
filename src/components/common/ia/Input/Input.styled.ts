@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { color, media } from "../../../../resources/style/variables.style";
+import {
+  color,
+  font,
+  media
+} from "../../../../resources/style/variables.style";
 
 interface StyleProps {
   error?: boolean;
@@ -34,6 +38,22 @@ const Label = styled.label<StyleProps>`
     border: none;
   `}
 
+  ${({ type }) =>
+    type === "date" &&
+    `
+    > div.react-datepicker-wrapper {
+      position: relative;
+      left: 52px;
+      top: 50%;
+      transform: translateY(-50%);
+      visibility: hidden;
+    }
+
+    > div.readable-date {
+
+    }
+  `}
+
   svg {
     position: absolute;
     left: 0;
@@ -47,8 +67,10 @@ const Label = styled.label<StyleProps>`
     visibility: hidden;
 
     + p {
+      position: absolute;
+      top: 50%;
       font-size: 14px;
-      transform: translate(54px, -50%);
+      transform: translate(62px, -50%);
     }
   }
 
@@ -83,6 +105,28 @@ const Label = styled.label<StyleProps>`
         font-size: 12px;
       }
     }
+
+    & + p {
+      position: absolute;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-32px);
+      font-size: 10px;
+      color: ${(props) => (props.error ? color.red : "black")};
+      transition: 0.18s;
+      text-transform: capitalize;
+
+      ${media.tablet} {
+        font-size: 12px;
+      }
+    }
+  }
+
+  p.readable-date {
+    position: absolute;
+    left: 62px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   textarea {
@@ -95,25 +139,11 @@ const Label = styled.label<StyleProps>`
     min-height: 220px;
     height: 100%;
     max-height: 420px;
+    font-family: ${font.family.bread};
 
     & ~ span {
       position: relative;
       top: -2px;
-    }
-  }
-
-  p {
-    position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-32px);
-    font-size: 10px;
-    color: ${(props) => (props.error ? color.red : "black")};
-    transition: 0.18s;
-    text-transform: capitalize;
-
-    ${media.tablet} {
-      font-size: 12px;
     }
   }
 

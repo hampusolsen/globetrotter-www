@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
+import { ALLOWED_IMAGE_TYPES } from "../../../../config/constants.config";
 import profileState from "../../../../store/profile.state";
 import Button from "../../../common/ia/Button/Button.ia";
 import Input from "../../../common/ia/Input/Input.ia";
@@ -22,9 +23,7 @@ const validationSchema = yup.object().shape({
     .test("type", "Incorrect file type.", (file) => {
       if (!file) return true;
 
-      return ["image/jpeg", "image/png", "image/jpg", "image/webp"].includes(
-        file.type
-      );
+      return ALLOWED_IMAGE_TYPES.includes(file.type);
     })
 });
 
@@ -46,13 +45,7 @@ const EditProfile: React.FC = () => {
     _actions: FormikHelpers<EditProfileFormValues>
   ) {
     const profileUpdates = await API.updateUserProfile(values);
-
-    // eslint-disable-next-line no-console
-    if (!profileUpdates) console.error("no response data :(");
-
-    if (profileUpdates) {
-      setProfile((current) => ({ ...current, ...profileUpdates }));
-    }
+    setProfile((current) => ({ ...current, ...profileUpdates }));
   }
 
   const Wrapper = styled.div`

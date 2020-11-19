@@ -1,5 +1,3 @@
-import * as yup from "yup";
-
 export type Procedure = (...args: unknown[]) => void;
 
 export type Options = {
@@ -40,12 +38,4 @@ export function debounce<F extends Procedure>(
       func.apply(context, args);
     }
   };
-}
-
-export function mergeYupValidationSchemas(
-  ...schemas: yup.ObjectSchema[]
-): yup.ObjectSchema {
-  const [first, ...rest] = schemas;
-
-  return rest.reduce((merged, current) => merged.concat(current), first);
 }
