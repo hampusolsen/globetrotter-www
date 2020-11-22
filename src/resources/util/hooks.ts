@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import debounceFunction from "./helpers";
+import { debounce } from "./helpers";
 
 export const useTrailingSlug = (): string => {
-  const [trailingSlug, setTrailingSlug] = useState("");
   const { pathname } = useLocation();
+  const [trailingSlug, setTrailingSlug] = useState(
+    pathname.split("/").pop() || ""
+  );
 
   useEffect(() => {
     const newSlug = pathname.split("/").pop();
@@ -17,7 +19,9 @@ export const useTrailingSlug = (): string => {
 /**
  * Let's you use current viewport sizes after window has been resized.
  *
- * @returns object. { height: number, width: number }
+ * @returns object
+ * @property height number
+ * @property width number
  */
 export const useViewportSize = (): {
   height: number;
@@ -29,7 +33,7 @@ export const useViewportSize = (): {
   });
 
   useEffect(() => {
-    const handleResize = debounceFunction(() => {
+    const handleResize = debounce(() => {
       setViewportSize({
         height: window.innerHeight,
         width: window.innerWidth

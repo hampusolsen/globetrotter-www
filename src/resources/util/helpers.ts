@@ -1,10 +1,10 @@
-export type Procedure = (...args: any[]) => void;
+export type Procedure = (...args: unknown[]) => void;
 
 export type Options = {
   isImmediate: boolean;
 };
 
-export default function debounceFunction<F extends Procedure>(
+export function debounce<F extends Procedure>(
   func: F,
   waitMilliseconds = 50,
   options: Options = {

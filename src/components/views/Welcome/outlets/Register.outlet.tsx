@@ -46,10 +46,8 @@ const Signup: React.FC = () => {
 
   async function handleSubmit(
     { email, password }: SignupFormValues,
-    actions: FormikHelpers<SignupFormValues>
+    _actions: FormikHelpers<SignupFormValues>
   ) {
-    actions.setSubmitting(true);
-
     const { status } = await API.registerLocally({ email, password });
 
     if (status === 204) navigate(RoutePaths.ROOT);

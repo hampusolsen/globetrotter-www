@@ -15,7 +15,7 @@ const Navigation = styled.nav`
   z-index: 99;
 `;
 
-const Link = styled(NavLink)<{ translateFactor: number }>`
+const Link = styled(NavLink)`
   color: black;
   text-decoration: none;
   text-transform: uppercase;
@@ -29,10 +29,6 @@ const Link = styled(NavLink)<{ translateFactor: number }>`
 
   &.active {
     background-color: ${color.lightgrey};
-
-    & ~ div::after {
-      transform: translateX(${({ translateFactor }) => translateFactor * 100}%);
-    }
   }
 
   &:visited {
@@ -40,7 +36,7 @@ const Link = styled(NavLink)<{ translateFactor: number }>`
   }
 `;
 
-const Indicator = styled.div`
+const Indicator = styled.div<{ translateFactor: number }>`
   position: absolute;
   bottom: 0;
   background-color: ${color.lightgrey};
@@ -55,6 +51,7 @@ const Indicator = styled.div`
     position: absolute;
     left: 0;
     transition: 0.2s;
+    transform: translateX(${({ translateFactor }) => translateFactor * 100}%);
   }
 `;
 
@@ -71,24 +68,25 @@ const links = [
 
 const ProfileContacts: React.FC = () => {
   const slug = useTrailingSlug();
-  const slugMatchesRoutePath = links.some(({ to }) => to === slug);
+  const matchedIndex = links.findIndex(({ to }) => to === slug);
 
-  if (!slugMatchesRoutePath) return <Navigate to={RoutePaths.FOLLOWERS} />;
+  if (matchedIndex < 0) return <Navigate to={RoutePaths.FOLLOWERS} />;
 
-  const matchedIndex = links.reduce(
-    (acc, curr, idx) => (slug === curr.to ? idx : acc),
-    0
-  );
+  const activePath = links[matchedIndex].to;
 
   return (
     <>
       <Navigation>
         {links.map((link) => (
-          <Link key={link.to} to={link.to} translateFactor={matchedIndex}>
+          <Link
+            key={link.to}
+            to={link.to}
+            className={activePath === link.to ? "active" : ""}
+          >
             <Text misc>{link.text}</Text>
           </Link>
         ))}
-        <Indicator />
+        <Indicator translateFactor={matchedIndex} />
       </Navigation>
       <UserList>
         <Outlet />

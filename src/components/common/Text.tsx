@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { font, media } from "../../resources/style/variables.style";
+import { color, font, media } from "../../resources/style/variables.style";
 
 interface StyleProps {
   color?: string;
@@ -8,7 +8,13 @@ interface StyleProps {
   bold?: boolean;
 }
 
-const Title = styled.h1<StyleProps>``;
+const Title = styled.h1<StyleProps>`
+  font-family: ${font.family.heading};
+  font-size: 18px;
+  font-weight: bold;
+  color: ${color.blue};
+`;
+
 const Subtitle = styled.h2<StyleProps>``;
 
 const Heading = styled.h3<StyleProps>`
@@ -60,6 +66,7 @@ interface Props extends StyleProps {
   subtitle?: boolean;
   heading?: boolean;
   misc?: boolean;
+  className?: string;
   children: string;
 }
 

@@ -14,9 +14,11 @@ interface StyleProps extends InheritedProps {
 
 interface Props extends InheritedProps {
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const Wrapper = styled.div<StyleProps>`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -38,11 +40,11 @@ const Wrapper = styled.div<StyleProps>`
   }
 `;
 
-const Fullscreen: React.FC<Props> = ({ children, overFlow = false }) => {
+const Fullscreen: React.FC<Props> = ({ children, ...rest }) => {
   const viewportSize = useViewportSize();
 
   return (
-    <Wrapper overFlow={overFlow} {...viewportSize}>
+    <Wrapper {...viewportSize} {...rest}>
       {children}
     </Wrapper>
   );

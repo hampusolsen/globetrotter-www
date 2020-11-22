@@ -4,9 +4,10 @@ import React from "react";
 import styled from "styled-components";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
+import { ALLOWED_IMAGE_TYPES } from "../../../../config/constants.config";
 import profileState from "../../../../store/profile.state";
 import Button from "../../../common/ia/Button/Button.ia";
-import Input from "../../../common/ia/Input.ia";
+import Input from "../../../common/ia/Input/Input.ia";
 import UploadIcon from "../../../common/icons/Upload.icon";
 
 const validationSchema = yup.object().shape({
@@ -22,9 +23,7 @@ const validationSchema = yup.object().shape({
     .test("type", "Incorrect file type.", (file) => {
       if (!file) return true;
 
-      return ["image/jpeg", "image/png", "image/jpg", "image/webp"].includes(
-        file.type
-      );
+      return ALLOWED_IMAGE_TYPES.includes(file.type);
     })
 });
 
@@ -33,7 +32,7 @@ export type EditProfileFormValues = {
   displayName: string;
 };
 
-const ProfileEdit: React.FC = () => {
+const EditProfile: React.FC = () => {
   const [profile, setProfile] = useAtom(profileState);
 
   const initialFormValues: EditProfileFormValues = {
@@ -46,13 +45,7 @@ const ProfileEdit: React.FC = () => {
     _actions: FormikHelpers<EditProfileFormValues>
   ) {
     const profileUpdates = await API.updateUserProfile(values);
-
-    // eslint-disable-next-line no-console
-    if (!profileUpdates) console.error("no response data :(");
-
-    if (profileUpdates) {
-      setProfile((current) => ({ ...current, ...profileUpdates }));
-    }
+    setProfile((current) => ({ ...current, ...profileUpdates }));
   }
 
   const Wrapper = styled.div`
@@ -91,4 +84,4 @@ const ProfileEdit: React.FC = () => {
   );
 };
 
-export default ProfileEdit;
+export default EditProfile;
