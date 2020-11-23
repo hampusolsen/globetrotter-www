@@ -8,6 +8,13 @@ interface StyleProps {
   bold?: boolean;
 }
 
+const Display = styled.h1<StyleProps>`
+  font-family: ${font.family.display};
+  font-size: 32px;
+  font-weight: bold;
+  color: ${color.blue};
+`;
+
 const Title = styled.h1<StyleProps>`
   font-family: ${font.family.heading};
   font-size: 18px;
@@ -55,6 +62,7 @@ const Misc = styled.span<StyleProps>`
 `;
 
 type TextComponentType =
+  | typeof Display
   | typeof Title
   | typeof Subtitle
   | typeof Heading
@@ -62,6 +70,7 @@ type TextComponentType =
   | typeof Misc;
 
 interface Props extends StyleProps {
+  display?: boolean;
   title?: boolean;
   subtitle?: boolean;
   heading?: boolean;
@@ -72,6 +81,7 @@ interface Props extends StyleProps {
 
 const Text: React.FC<Props> = ({
   children,
+  display,
   title,
   subtitle,
   heading,
@@ -80,6 +90,7 @@ const Text: React.FC<Props> = ({
 }) => {
   let Component: TextComponentType = Bread;
 
+  if (display) Component = Display;
   if (title) Component = Title;
   if (subtitle) Component = Subtitle;
   if (heading) Component = Heading;

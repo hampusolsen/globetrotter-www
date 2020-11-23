@@ -15,12 +15,12 @@ const firstStep = {
 const secondStep = {
   title: "Cool, how long?",
   fields: {
-    from_date: "from_date",
-    to_date: "to_date"
+    fromDate: "fromDate",
+    toDate: "toDate"
   },
   schema: yup.object({
-    from_date: yup.date().required("Required field."),
-    to_date: yup
+    fromDate: yup.date().required("Required field."),
+    toDate: yup
       .date()
       .required("Required field.")
       .test(
@@ -29,7 +29,7 @@ const secondStep = {
         function compareDates(toDate) {
           if (!toDate) return true;
 
-          const fromDate = this.resolve(yup.ref("from_date")) as Date;
+          const fromDate = this.resolve(yup.ref("fromDate")) as Date;
           if (toDate < fromDate) return false;
 
           return true;

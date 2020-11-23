@@ -6,9 +6,7 @@ import API from "../../../../api/api.client";
 import RoutePaths from "../../../../config/router.config";
 import { color, media } from "../../../../resources/style/variables.style";
 import { useTrailingSlug } from "../../../../resources/util/hooks";
-import profileState, {
-  initialProfileState
-} from "../../../../store/profile.state";
+import { globalAtom, globalState } from "../../../../store/profile.state";
 import EditIcon from "../../../common/icons/Edit.icon";
 import FollowersIcon from "../../../common/icons/Followers.icon";
 import LogoutIcon from "../../../common/icons/Logout.icon";
@@ -114,7 +112,7 @@ const LogoutButton = styled.button`
 
 const ProfileNavigation: React.FC = () => {
   const navigate = useNavigate();
-  const [, setProfile] = useAtom(profileState);
+  const [, setProfile] = useAtom(globalAtom);
   const slug = useTrailingSlug();
 
   const active = [RoutePaths.FOLLOWERS, RoutePaths.FOLLOWING].some(
@@ -125,7 +123,7 @@ const ProfileNavigation: React.FC = () => {
     const userLoggedOut = await API.logoutUser();
 
     if (userLoggedOut) {
-      setProfile(initialProfileState);
+      setProfile(globalState);
       navigate(RoutePaths.ROOT);
     }
   }

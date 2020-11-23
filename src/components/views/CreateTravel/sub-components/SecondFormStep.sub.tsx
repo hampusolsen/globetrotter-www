@@ -4,8 +4,8 @@ import Input from "../../../common/ia/Input/Input.ia";
 const SecondFormStep: React.FC = () => {
   return (
     <section>
-      <Input type="date" name="from_date" label="From" />
-      <Input type="date" name="to_date" label="To" />
+      <Input type="date" name="fromDate" label="From" />
+      <Input type="date" name="toDate" label="To" />
     </section>
   );
 };

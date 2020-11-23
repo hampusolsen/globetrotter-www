@@ -1,8 +1,10 @@
 import { Formik, FormikHelpers } from "formik";
+import { useAtom } from "jotai";
 import React, { useState } from "react";
 import API from "../../../api/api.client";
 import { TIME } from "../../../config/constants.config";
 import LoadingOverlay from "../../../middleware/Loader";
+import { globalAtom } from "../../../store/profile.state";
 import { Travel } from "../../../store/types.state";
 import Button from "../../common/ia/Button/Button.ia";
 import ArrowIcon from "../../common/icons/Arrow.icon";
@@ -21,21 +23,21 @@ import SecondFormStep from "./sub-components/SecondFormStep.sub";
 
 export interface TravelFormValues
   extends Pick<Travel, "title" | "description"> {
-  from_date: undefined | Date;
-  to_date: undefined | Date;
-  id?: string;
+  fromDate: undefined | Date;
+  toDate: undefined | Date;
 }
 
 const initialFormValues: TravelFormValues = {
   title: "",
   description: "",
-  from_date: new Date(),
-  to_date: new Date(Date.now() + TIME.ONE_WEEK)
+  fromDate: new Date(),
+  toDate: new Date(Date.now() + TIME.ONE_WEEK)
 };
 
 const initialFormState = {
   current: 0,
-  cleared: 0
+  cleared: 0,
+  data: {} as Required<Travel>
 };
 
 function renderStep(step: number): React.ReactElement | null {
@@ -50,7 +52,8 @@ function renderStep(step: number): React.ReactElement | null {
 }
 
 const CreateTravel: React.FC = () => {
-  const [{ current, cleared }, setStep] = useState(initialFormState);
+  const [profile, setProfile] = useAtom(globalAtom);
+  const [{ current, cleared, data }, setStep] = useState(initialFormState);
   const onFirstStep = current === 0;
   const onLastStep = current === formSteps.length - 1;
   const completed = current === formSteps.length;
@@ -67,7 +70,7 @@ const CreateTravel: React.FC = () => {
   }
 
   function nextStep() {
-    setStep((s) => ({ cleared: s.cleared + 1, current: s.current + 1 }));
+    setStep((s) => ({ ...s, cleared: s.cleared + 1, current: s.current + 1 }));
   }
 
   async function handleSubmit(
@@ -81,7 +84,9 @@ const CreateTravel: React.FC = () => {
       actions.setTouched({});
       actions.setSubmitting(false);
     } else {
-      await API.createTravel(values);
+      const travel = await API.createTravel(values);
+      setProfile({ ...profile, travels: profile.travels.concat(travel) });
+      setStep((s) => ({ ...s, data: travel }));
       actions.setSubmitting(false);
       nextStep();
     }
@@ -121,7 +126,7 @@ const CreateTravel: React.FC = () => {
           </Formik>
         </>
       ) : (
-        <FormCompleted />
+        <FormCompleted travelId={data.id} />
       )}
     </Fullscreen>
   );
