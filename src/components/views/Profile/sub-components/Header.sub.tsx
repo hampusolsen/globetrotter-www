@@ -2,7 +2,7 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { color, font } from "../../../../resources/style/variables.style";
-import { globalAtom } from "../../../../store/profile.state";
+import { globalAtom } from "../../../../store/global.state";
 import Text from "../../../common/Text";
 import ProfilePicture from "../../../modules/ProfilePicture/ProfilePicture.module";
 
@@ -57,15 +57,15 @@ const ProfileHeader: React.FC = () => {
       </div>
       <StatisticsList>
         <Statistic>
-          {profile.followers ? profile.followers.length : 0}
+          {profile.followers.length}
           <Text misc>Followers</Text>
         </Statistic>
         <Statistic>
-          {profile.following ? profile.following.length : 0}
+          {profile.following.length}
           <Text misc>Following</Text>
         </Statistic>
         <Statistic>
-          {profile.travels ? profile.travels.length : 0}
+          {profile.travels.length}
           <Text misc>Travels</Text>
         </Statistic>
       </StatisticsList>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/api.client";
 import RoutePaths from "../config/router.config";
 import { ChildrenOnlyProps } from "../resources/types/commonProps";
-import { globalAtom } from "../store/profile.state";
+import { globalAtom } from "../store/global.state";
 import LoadingOverlay from "./Loader";
 
 const RouteGuard: React.FC<ChildrenOnlyProps> = ({ children }) => {

@@ -9,7 +9,8 @@ enum RoutePaths {
   FOLLOWING = "following",
   EDIT = "edit",
   NEW = "new",
-  TRAVEL = "travel"
+  TRAVEL = "travel",
+  FEED = "feed"
 }
 
 export default RoutePaths;

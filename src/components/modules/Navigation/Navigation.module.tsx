@@ -24,11 +24,15 @@ const Wrapper = styled.nav`
 
   a {
     transition: fill 0.2s;
+
+    &.active {
+      fill: white;
+    }
   }
 `;
 
 const menuItems = [
-  { name: "map", to: RoutePaths.MAP, Icon: MapIcon },
+  { name: "feed", to: RoutePaths.FEED, Icon: MapIcon },
   {
     name: "add_travel",
     to: `${RoutePaths.TRAVEL}/${RoutePaths.NEW}`,
@@ -41,7 +45,7 @@ const Navigation: React.FC = () => {
   return (
     <Wrapper>
       {menuItems.map(({ name, to, Icon }) => (
-        <NavLink key={name} to={to} activeStyle={{ fill: "white" }}>
+        <NavLink key={name} to={to}>
           <Icon />
         </NavLink>
       ))}

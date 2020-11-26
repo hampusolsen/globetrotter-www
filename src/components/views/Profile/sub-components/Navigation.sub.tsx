@@ -6,7 +6,7 @@ import API from "../../../../api/api.client";
 import RoutePaths from "../../../../config/router.config";
 import { color, media } from "../../../../resources/style/variables.style";
 import { useTrailingSlug } from "../../../../resources/util/hooks";
-import { globalAtom, globalState } from "../../../../store/profile.state";
+import { globalAtom, globalState } from "../../../../store/global.state";
 import EditIcon from "../../../common/icons/Edit.icon";
 import FollowersIcon from "../../../common/icons/Followers.icon";
 import LogoutIcon from "../../../common/icons/Logout.icon";

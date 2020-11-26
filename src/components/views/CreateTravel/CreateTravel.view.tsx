@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import API from "../../../api/api.client";
 import { TIME } from "../../../config/constants.config";
 import LoadingOverlay from "../../../middleware/Loader";
-import { globalAtom } from "../../../store/profile.state";
+import { globalAtom } from "../../../store/global.state";
 import { Travel } from "../../../store/types.state";
 import Button from "../../common/ia/Button/Button.ia";
 import ArrowIcon from "../../common/icons/Arrow.icon";

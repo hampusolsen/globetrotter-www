@@ -55,3 +55,8 @@ export interface GlobalState {
   following: MinifiedProfile[];
   travels: Travel[];
 }
+
+export interface FeedState {
+  mode: "light" | "dark";
+  menuOpen: boolean;
+}

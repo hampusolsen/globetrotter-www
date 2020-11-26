@@ -41,6 +41,7 @@
     "react/jsx-filename-extension": "off",
     "react/destructuring-assignment": "off",
     "react/prop-types": "off",
+    "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/naming-convention": "off",
     "@typescript-eslint/no-this-alias": "off",
     "@typescript-eslint/ban-ts-comment": "off",

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
 import { ALLOWED_IMAGE_TYPES } from "../../../../config/constants.config";
-import { globalAtom } from "../../../../store/profile.state";
+import { globalAtom } from "../../../../store/global.state";
 import Button from "../../../common/ia/Button/Button.ia";
 import Input from "../../../common/ia/Input/Input.ia";
 import UploadIcon from "../../../common/icons/Upload.icon";
