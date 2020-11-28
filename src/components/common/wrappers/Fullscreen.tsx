@@ -22,18 +22,12 @@ const Wrapper = styled.div<StyleProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden hidden;
+  overflow: hidden;
+  ${({ overFlow }) => overFlow && "overflow: hidden auto;"}
   top: 0;
   left: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
-
-  ${({ overFlow }) =>
-    overFlow &&
-    `
-  overflow-x: hidden;
-  overflow-y: auto;
-`}
 
   ${media.tablet} {
     position: relative;

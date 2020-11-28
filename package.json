@@ -8,10 +8,10 @@
   "author": "Hampus Olsen",
   "license": "MIT",
   "dependencies": {
+    "@react-google-maps/api": "^1.13.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "@types/react-datepicker": "^3.1.1",
     "axios": "^0.20.0",
     "formik": "^2.2.1",
     "history": "^5.0.0",
@@ -48,9 +48,11 @@
     ]
   },
   "devDependencies": {
+    "@types/googlemaps": "^3.40.3",
     "@types/jest": "^26.0.14",
     "@types/node": "^14.11.8",
     "@types/react": "^16.9.52",
+    "@types/react-datepicker": "^3.1.1",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
     "@types/styled-components": "^5.1.4",

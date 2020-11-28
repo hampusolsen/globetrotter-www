@@ -77,13 +77,9 @@ const ProfileContacts: React.FC = () => {
   return (
     <>
       <Navigation>
-        {links.map((link) => (
-          <Link
-            key={link.to}
-            to={link.to}
-            className={activePath === link.to ? "active" : ""}
-          >
-            <Text misc>{link.text}</Text>
+        {links.map(({ to, text }) => (
+          <Link key={to} to={to} className={activePath === to ? "active" : ""}>
+            <Text misc>{text}</Text>
           </Link>
         ))}
         <Indicator translateFactor={matchedIndex} />

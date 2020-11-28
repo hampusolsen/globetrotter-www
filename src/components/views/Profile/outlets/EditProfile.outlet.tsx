@@ -5,7 +5,7 @@ import styled from "styled-components";
 import * as yup from "yup";
 import API from "../../../../api/api.client";
 import { ALLOWED_IMAGE_TYPES } from "../../../../config/constants.config";
-import profileState from "../../../../store/profile.state";
+import { globalAtom } from "../../../../store/global.state";
 import Button from "../../../common/ia/Button/Button.ia";
 import Input from "../../../common/ia/Input/Input.ia";
 import UploadIcon from "../../../common/icons/Upload.icon";
@@ -33,11 +33,11 @@ export type EditProfileFormValues = {
 };
 
 const EditProfile: React.FC = () => {
-  const [profile, setProfile] = useAtom(profileState);
+  const [globalState, setGlobalState] = useAtom(globalAtom);
 
   const initialFormValues: EditProfileFormValues = {
     profilePicture: undefined,
-    displayName: profile.display_name
+    displayName: globalState.displayName
   };
 
   async function handleSubmit(
@@ -45,7 +45,7 @@ const EditProfile: React.FC = () => {
     _actions: FormikHelpers<EditProfileFormValues>
   ) {
     const profileUpdates = await API.updateUserProfile(values);
-    setProfile((current) => ({ ...current, ...profileUpdates }));
+    setGlobalState((current) => ({ ...current, ...profileUpdates }));
   }
 
   const Wrapper = styled.div`

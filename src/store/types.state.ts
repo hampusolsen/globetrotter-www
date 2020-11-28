@@ -2,34 +2,61 @@ export interface Image {
   src: string;
 }
 
-export interface Happening {
+export type Coordinate = number;
+
+export type Position = [Coordinate, Coordinate];
+
+export interface HappeningResponseData {
+  id: string;
+  travelId: string;
   title: string;
   description: string;
   images: Image[];
-  lng: number;
-  lat: number;
+  position: Position;
+  date: Date;
+  toDate?: Date;
+}
+
+export interface HappeningRequestData
+  extends Omit<HappeningResponseData, "images"> {
+  images: File[];
 }
 
 export interface Travel {
   title: string;
   description: string;
-  happenings: Happening[];
-  from_date: Date;
-  to_date: Date;
+  happenings: HappeningResponseData[];
+  fromDate: Date;
+  toDate: Date;
   id?: string;
+  travelers?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface MinifiedProfile {
-  display_name: string;
-  profile_pic?: string;
+  displayName: string;
+  profileNic?: string;
   id: string;
 }
 
-export interface ProfileState {
-  display_name: string;
+export interface Profile {
+  displayName: string;
   description?: string;
-  profile_pic?: string;
+  profilePic?: string;
+}
+
+export interface GlobalState {
+  id?: string;
+  displayName: string;
+  description?: string;
+  profilePic?: string;
   followers: MinifiedProfile[];
   following: MinifiedProfile[];
   travels: Travel[];
+}
+
+export interface FeedState {
+  mode: "light" | "dark";
+  menuOpen: boolean;
 }

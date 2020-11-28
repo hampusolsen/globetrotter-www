@@ -1,4 +1,5 @@
-import { AxiosError, AxiosResponse } from "axios";
+import { AxiosError } from "axios";
+import { GlobalState } from "../store/types.state";
 
 export interface IErrorResponseData {
   status: string;
@@ -9,20 +10,10 @@ export interface IErrorResponseData {
 
 export type ErrorResponse = AxiosError<IErrorResponseData>;
 
-export type UserData = {
-  display_name: string;
-  profile_pic?: string;
-  description?: string;
-  followers: [];
-  following: [];
-  travels: [];
-};
-
-export type UserDetailsData = Required<
-  Pick<UserData, "display_name" | "profile_pic" | "description">
+export type ProfileResponseData = Pick<
+  GlobalState,
+  "displayName" | "followers" | "following" | "travels"
 >;
-
-export type UseProfileResponse = AxiosResponse<UserData>;
 
 export type LocalCredentials = {
   email: string;

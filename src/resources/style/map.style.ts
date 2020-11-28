@@ -1,4 +1,4 @@
-export const darkMode = [
+export const darkMode: google.maps.MapTypeStyle[] = [
   {
     elementType: "geometry",
     stylers: [
@@ -220,7 +220,7 @@ export const darkMode = [
   }
 ];
 
-export const lightMode = [
+export const lightMode: google.maps.MapTypeStyle[] = [
   {
     elementType: "geometry",
     stylers: [

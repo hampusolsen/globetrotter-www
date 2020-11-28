@@ -1,8 +1,8 @@
 import Axios from "axios";
 import { TravelFormValues } from "../components/views/CreateTravel/CreateTravel.view";
-import { HappeningFormValues } from "../components/views/Map/sub-components/HappeningForm/HappeningForm.form";
 import { EditProfileFormValues } from "../components/views/Profile/outlets/EditProfile.outlet";
-import { LocalCredentials, UserData, UserDetailsData } from "./api.types";
+import { HappeningRequestData, Travel } from "../store/types.state";
+import { LocalCredentials, ProfileResponseData } from "./api.types";
 
 class APIClient {
   #client = Axios.create({
@@ -10,7 +10,7 @@ class APIClient {
     withCredentials: true
   });
 
-  async fetchUserProfile(userId?: string): Promise<UserData> {
+  async fetchUserProfile(userId?: string): Promise<ProfileResponseData> {
     if (userId) {
       const { data } = await this.#client.get(`/user/profile/${userId}`);
       return data;
@@ -48,7 +48,7 @@ class APIClient {
 
   async updateUserProfile(
     profile: EditProfileFormValues
-  ): Promise<UserDetailsData> {
+  ): Promise<ProfileResponseData> {
     const formData = new FormData();
 
     Object.entries(profile).forEach(([key, value]) => {
@@ -64,17 +64,17 @@ class APIClient {
     return data;
   }
 
-  async createTravel(travel: TravelFormValues) {
+  async createTravel(travel: TravelFormValues): Promise<Required<Travel>> {
     const { data } = await this.#client.post("/travel", travel);
     return data;
   }
 
-  async updateTravel(travel: TravelFormValues) {
+  async updateTravel(travel: Required<Travel>) {
     const { data } = await this.#client.put(`/travel/${travel.id}`, travel);
     return data;
   }
 
-  async createHappening(happening: HappeningFormValues) {
+  async createHappening(happening: HappeningRequestData) {
     const formData = new FormData();
 
     Object.entries(happening).forEach(([key, value]) => {
@@ -86,7 +86,7 @@ class APIClient {
     });
 
     const { data } = await this.#client.post(
-      `/travel/${happening.travel_id}`,
+      `/travel/${happening.travelId}`,
       formData
     );
 

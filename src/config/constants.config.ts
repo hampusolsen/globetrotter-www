@@ -5,6 +5,9 @@ export const TESTING = "testing";
 export const LOGIN = "login";
 export const SIGNUP = "signup";
 
+export const LIGHT_MODE = "light";
+export const DARK_MODE = "dark";
+
 export const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
   "image/webp",

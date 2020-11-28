@@ -47,3 +47,33 @@ export const useViewportSize = (): {
 
   return viewportSize;
 };
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
+}
+
+export const useGeolocation = (): Coordinates | undefined => {
+  const [coordinates, setCoordinates] = useState<Coordinates>();
+
+  function success({ coords }: Position) {
+    setCoordinates({
+      lat: coords.latitude,
+      lng: coords.longitude
+    });
+  }
+
+  function error() {}
+
+  const options: PositionOptions = {
+    enableHighAccuracy: true,
+    timeout: 5000
+  };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(success, error, options);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return coordinates;
+};

@@ -4,26 +4,30 @@ import { useNavigate } from "react-router-dom";
 import API from "../api/api.client";
 import RoutePaths from "../config/router.config";
 import { ChildrenOnlyProps } from "../resources/types/commonProps";
-import profileState from "../store/profile.state";
+import { globalAtom } from "../store/global.state";
 import LoadingOverlay from "./Loader";
 
 const RouteGuard: React.FC<ChildrenOnlyProps> = ({ children }) => {
   const navigate = useNavigate();
-  const [, setProfile] = useAtom(profileState);
+  const [, setGlobalState] = useAtom(globalAtom);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async function authorizeUser() {
-      const data = await API.fetchUserProfile();
+      try {
+        const profile = await API.fetchUserProfile();
 
-      if (!data) {
+        if (!profile) {
+          navigate(RoutePaths.ROOT);
+        } else {
+          setGlobalState(profile);
+          setLoading(false);
+        }
+      } catch {
         navigate(RoutePaths.ROOT);
-      } else {
-        setProfile(data);
-        setLoading(false);
       }
     })();
-  }, [setProfile, navigate]);
+  }, [setGlobalState, navigate]);
 
   return (
     <>
