@@ -50,7 +50,7 @@ const Signup: React.FC = () => {
   ) {
     const { status } = await API.registerLocally({ email, password });
 
-    if (status === 204) navigate(RoutePaths.ROOT);
+    if (status === 204) navigate(RoutePaths.MY);
     /**
      * @TODO Should show error message in notification.
      */
