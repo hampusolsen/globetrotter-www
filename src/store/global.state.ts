@@ -19,8 +19,15 @@ export const subscribersAtom = atom((get) => ({
   following: get(globalAtom).following
 }));
 
+export const profileStatsAtom = atom((get) => ({
+  followers: get(globalAtom).followers.length,
+  following: get(globalAtom).following.length,
+  travels: get(globalAtom).travels.length
+}));
+
 export const profileAtom = atom((get) => ({
   displayName: get(globalAtom).displayName,
   profilePic: get(globalAtom).profilePic,
-  description: get(globalAtom).description
+  description: get(globalAtom).description,
+  stats: get(profileStatsAtom)
 }));

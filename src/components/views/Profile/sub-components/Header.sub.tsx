@@ -2,9 +2,10 @@ import { useAtom } from "jotai";
 import React from "react";
 import styled from "styled-components";
 import { color, font } from "../../../../resources/style/variables.style";
-import { globalAtom } from "../../../../store/global.state";
+import { profileAtom } from "../../../../store/global.state";
 import Text from "../../../common/Text";
 import ProfilePicture from "../../../modules/ProfilePicture/ProfilePicture.module";
+import ProfileStats from "../../../modules/ProfileStats/ProfileStats.module";
 
 const Header = styled.header`
   min-height: 200px;
@@ -27,27 +28,8 @@ const Header = styled.header`
   }
 `;
 
-const StatisticsList = styled.ul`
-  display: flex;
-`;
-
-const Statistic = styled.li`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${color.grey};
-  margin: 0 8px;
-  width: 56px;
-
-  > span {
-    font-family: ${font.family.heading};
-    font-size: 12px;
-    margin-top: 4px;
-  }
-`;
-
 const ProfileHeader: React.FC = () => {
-  const [profile] = useAtom(globalAtom);
+  const [profile] = useAtom(profileAtom);
 
   return (
     <Header>
@@ -55,20 +37,7 @@ const ProfileHeader: React.FC = () => {
         <ProfilePicture size="large" source={profile.profilePic} />
         <Text>{profile.displayName}</Text>
       </div>
-      <StatisticsList>
-        <Statistic>
-          {profile.followers.length}
-          <Text misc>Followers</Text>
-        </Statistic>
-        <Statistic>
-          {profile.following.length}
-          <Text misc>Following</Text>
-        </Statistic>
-        <Statistic>
-          {profile.travels.length}
-          <Text misc>Travels</Text>
-        </Statistic>
-      </StatisticsList>
+      <ProfileStats {...profile.stats} />
     </Header>
   );
 };

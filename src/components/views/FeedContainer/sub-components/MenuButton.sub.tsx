@@ -7,7 +7,7 @@ import {
   resetButtonStyle
 } from "../../../../resources/style/css.style";
 import { color } from "../../../../resources/style/variables.style";
-import { menuIsOpen } from "../../../../store/feed.state";
+import { drawerAtom } from "../../../../store/drawer.state";
 
 const Button = styled.button<{ isOpen: boolean }>`
   ${resetButtonStyle}
@@ -73,11 +73,11 @@ const Hamburger = styled.div<{ isOpen: boolean }>`
 `;
 
 const MenuButton: React.FC = () => {
-  const [isOpen, setMenu] = useAtom(menuIsOpen);
+  const [menuIsOpen, setMenuIsOpen] = useAtom(drawerAtom);
 
   return (
-    <Button isOpen={isOpen} onClick={() => setMenu(!isOpen)}>
-      <Hamburger isOpen={isOpen} />
+    <Button isOpen={menuIsOpen} onClick={() => setMenuIsOpen(!menuIsOpen)}>
+      <Hamburger isOpen={menuIsOpen} />
     </Button>
   );
 };

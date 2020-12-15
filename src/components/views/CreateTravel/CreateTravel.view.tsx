@@ -54,6 +54,7 @@ function renderStep(step: number): React.ReactElement | null {
 const CreateTravel: React.FC = () => {
   const [profile, setProfile] = useAtom(globalAtom);
   const [{ current, cleared, data }, setStep] = useState(initialFormState);
+
   const onFirstStep = current === 0;
   const onLastStep = current === formSteps.length - 1;
   const completed = current === formSteps.length;

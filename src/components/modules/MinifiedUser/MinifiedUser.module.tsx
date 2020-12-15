@@ -1,8 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { color } from "../../../../resources/style/variables.style";
-import Text from "../../../common/Text";
-import ProfilePicture from "../../../modules/ProfilePicture/ProfilePicture.module";
+import { color } from "../../../resources/style/variables.style";
+import Text from "../../common/Text";
+import ProfilePicture from "../ProfilePicture/ProfilePicture.module";
 
 const Wrapper = styled.li`
   display: flex;

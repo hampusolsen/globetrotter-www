@@ -3,7 +3,7 @@
  */
 
 const size = {
-  phone: "426px",
+  phone: "415px",
   tablet: "768px",
   laptop: "1024px",
   desktop: "1440px"
@@ -16,17 +16,6 @@ export const media = {
   laptop: formatMediaQuery(size.tablet),
   desktop: formatMediaQuery(size.laptop)
 };
-
-/**
- * Calculates view height in pixels for mobile devices to used with styled-components, e.g.:
- *
- * height: ${calcViewHeight(20)}px;
- *
- * @param percent Desired percent as positivt integer
- * @returns Amount of pixels based on the provided view height percent;
- */
-export const calcViewHeight = (percent: number): number =>
-  window.innerHeight * 0.01 * percent;
 
 /**
  *  Colors

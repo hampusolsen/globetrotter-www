@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router";
+import { DEFAULT_CENTER_COORDINATES } from "../../config/constants.config";
+import { Coordinates } from "../types/common";
 import { debounce } from "./helpers";
 
 export const useTrailingSlug = (): string => {
@@ -48,10 +50,10 @@ export const useViewportSize = (): {
   return viewportSize;
 };
 
-export interface Coordinates {
-  lat: number;
-  lng: number;
-}
+const options: PositionOptions = {
+  enableHighAccuracy: true,
+  timeout: 5000
+};
 
 export const useGeolocation = (): Coordinates | undefined => {
   const [coordinates, setCoordinates] = useState<Coordinates>();
@@ -63,12 +65,9 @@ export const useGeolocation = (): Coordinates | undefined => {
     });
   }
 
-  function error() {}
-
-  const options: PositionOptions = {
-    enableHighAccuracy: true,
-    timeout: 5000
-  };
+  function error() {
+    setCoordinates(DEFAULT_CENTER_COORDINATES);
+  }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, error, options);
@@ -76,4 +75,24 @@ export const useGeolocation = (): Coordinates | undefined => {
   }, []);
 
   return coordinates;
+};
+
+export const useThrottle = <T>(value: T, ms = 200): T => {
+  const [throttledValue, setThrottledValue] = useState(value);
+  const lastRan = useRef(Date.now());
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (Date.now() - lastRan.current >= ms) {
+        setThrottledValue(value);
+        lastRan.current = Date.now();
+      }
+    }, ms - (Date.now() - lastRan.current));
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, ms]);
+
+  return throttledValue;
 };

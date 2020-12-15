@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api/api.client";
 import RoutePaths from "../config/router.config";
-import { ChildrenOnlyProps } from "../resources/types/commonProps";
+import { ChildrenOnlyProps } from "../resources/types/component";
 import { globalAtom } from "../store/global.state";
 import LoadingOverlay from "./Loader";
 

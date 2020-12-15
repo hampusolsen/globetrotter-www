@@ -14,7 +14,8 @@ type InputTypes =
   | "file"
   | "number"
   | "date"
-  | "textarea";
+  | "textarea"
+  | "radio";
 
 interface SharedInputProps {
   type?: InputTypes;
@@ -22,6 +23,7 @@ interface SharedInputProps {
   label?: string;
   Icon?: React.FC;
   multiple?: boolean;
+  value?: string;
 }
 
 /**
@@ -34,7 +36,8 @@ const Input: React.FC<SharedInputProps> = ({
   type = "text",
   Icon,
   label,
-  multiple = false
+  multiple = false,
+  value
 }) => {
   const { errors, touched, setFieldValue, values } = useFormikContext<
     Record<string, unknown>
@@ -45,10 +48,9 @@ const Input: React.FC<SharedInputProps> = ({
   switch (type) {
     case "date":
       return (
-        <Label htmlFor={name} type={type} error={!!errorMessage}>
+        <Label type={type} error={!!errorMessage}>
           <CalendarIcon />
           <Datepicker
-            id={name}
             name={name}
             selected={values[name] as Date}
             onChange={(date) => setFieldValue(name, date)}
@@ -78,10 +80,9 @@ const Input: React.FC<SharedInputProps> = ({
         : "Choose file to upload";
 
       return (
-        <Label htmlFor={name} type={type} error={!!errorMessage}>
+        <Label type={type} error={!!errorMessage}>
           {Icon && <Icon />}
           <input
-            id={name}
             name={name}
             type={type}
             multiple={multiple}
@@ -109,8 +110,8 @@ const Input: React.FC<SharedInputProps> = ({
 
     case "textarea":
       return (
-        <Label htmlFor={name} type={type} error={!!errorMessage}>
-          <Field as={type} id={name} name={name} placeholder={name} />
+        <Label type={type} error={!!errorMessage}>
+          <Field as={type} name={name} placeholder={name} />
           <Text>{label || name}</Text>
           {errorMessage && (
             <Text misc color={color.red} italic>
@@ -120,12 +121,19 @@ const Input: React.FC<SharedInputProps> = ({
         </Label>
       );
 
+    case "radio":
+      return (
+        <Label type={type}>
+          <Field type={type} name={name} value={value} />
+          <Text>{label || "label required"}</Text>
+        </Label>
+      );
+
     default:
       return (
-        <Label htmlFor={name} type={type} error={!!errorMessage}>
+        <Label type={type} error={!!errorMessage}>
           {Icon && <Icon />}
           <Field
-            id={name}
             name={name}
             type={type || "text"}
             placeholder={name}
