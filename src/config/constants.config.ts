@@ -5,8 +5,10 @@ export const TESTING = "testing";
 export const LOGIN = "login";
 export const SIGNUP = "signup";
 
-export const LIGHT_MODE = "light";
-export const DARK_MODE = "dark";
+export const LIGHT = "light";
+export const DARK = "dark";
+export const VIEW = "view";
+export const EDIT = "edit";
 
 export const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -19,4 +21,9 @@ export const ALLOWED_IMAGE_TYPES = [
 export const TIME = {
   ONE_DAY: 1000 * 60 * 60 * 24,
   ONE_WEEK: 1000 * 60 * 60 * 24 * 7
+};
+
+export const DEFAULT_CENTER_COORDINATES = {
+  lat: 52.520007,
+  lng: 13.404954
 };

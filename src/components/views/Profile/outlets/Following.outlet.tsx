@@ -1,5 +1,5 @@
 import React from "react";
-import MinifiedUser from "../sub-components/MinifiedUser.sub";
+import MinifiedUser from "../../../modules/MinifiedUser/MinifiedUser.module";
 
 const Following: React.FC = () => {
   return (

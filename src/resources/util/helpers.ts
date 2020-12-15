@@ -39,3 +39,7 @@ export function debounce<F extends Procedure>(
     }
   };
 }
+
+export function toFlatArray<T>(acc: T[], cur: T[]): T[] {
+  return acc.concat(cur);
+}

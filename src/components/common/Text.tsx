@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { color, font, media } from "../../resources/style/variables.style";
+import { font, media } from "../../resources/style/variables.style";
 
 interface StyleProps {
   color?: string;
@@ -12,14 +12,12 @@ const Display = styled.h1<StyleProps>`
   font-family: ${font.family.display};
   font-size: 32px;
   font-weight: bold;
-  color: ${color.blue};
 `;
 
 const Title = styled.h1<StyleProps>`
   font-family: ${font.family.heading};
   font-size: 18px;
   font-weight: bold;
-  color: ${color.blue};
 `;
 
 const Subtitle = styled.h2<StyleProps>``;
@@ -27,7 +25,6 @@ const Subtitle = styled.h2<StyleProps>``;
 const Heading = styled.h3<StyleProps>`
   font-family: ${font.family.heading};
   font-size: 14px;
-  color: ${(props) => props.color || "black"};
   font-style: ${(props) => (props.italic ? "italic" : "normal")};
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
 
@@ -39,7 +36,6 @@ const Heading = styled.h3<StyleProps>`
 const Bread = styled.p<StyleProps>`
   font-family: ${font.family.bread};
   font-size: 14px;
-  color: ${(props) => props.color || "black"};
   font-style: ${(props) => (props.italic ? "italic" : "normal")};
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
 
@@ -52,7 +48,6 @@ const Misc = styled.span<StyleProps>`
   font-family: ${font.family.bread};
   font-size: 12px;
   letter-spacing: 0.5px;
-  color: ${(props) => props.color || "black"};
   font-style: ${(props) => (props.italic ? "italic" : "normal")};
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
 
@@ -76,7 +71,7 @@ interface Props extends StyleProps {
   heading?: boolean;
   misc?: boolean;
   className?: string;
-  children: string;
+  children: string | number;
 }
 
 const Text: React.FC<Props> = ({

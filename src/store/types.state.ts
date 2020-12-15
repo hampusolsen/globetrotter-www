@@ -1,42 +1,30 @@
-export interface Image {
-  src: string;
-}
+import { Coordinates } from "../resources/types/common";
 
-export type Coordinate = number;
-
-export type Position = [Coordinate, Coordinate];
-
-export interface HappeningResponseData {
-  id: string;
+export interface Happening {
+  id?: string;
   travelId: string;
   title: string;
   description: string;
-  images: Image[];
-  position: Position;
+  images: string[];
+  latLng: Coordinates;
   date: Date;
-  toDate?: Date;
-}
-
-export interface HappeningRequestData
-  extends Omit<HappeningResponseData, "images"> {
-  images: File[];
 }
 
 export interface Travel {
   title: string;
   description: string;
-  happenings: HappeningResponseData[];
+  happenings: Happening[];
   fromDate: Date;
   toDate: Date;
   id?: string;
-  travelers?: string[];
+  travelers?: MinifiedProfile[];
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface MinifiedProfile {
   displayName: string;
-  profileNic?: string;
+  profilePic?: string;
   id: string;
 }
 
@@ -59,4 +47,13 @@ export interface GlobalState {
 export interface FeedState {
   mode: "light" | "dark";
   menuOpen: boolean;
+}
+
+export interface HappeningMarker extends Required<Happening> {
+  authorPic: string;
+  authorName: string;
+}
+
+export interface RequiredTravel extends Required<Travel> {
+  happenings: Required<Happening>[];
 }

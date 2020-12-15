@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styled from "styled-components";
-import { ChildrenOnlyProps } from "../../../resources/types/commonProps";
+import { ChildrenOnlyProps } from "../../../resources/types/component";
 import { useViewportSize } from "../../../resources/util/hooks";
 
 const Wrapper = styled.div<{ height: number; width: number }>`
@@ -13,11 +13,17 @@ const Wrapper = styled.div<{ height: number; width: number }>`
   z-index: 100;
 `;
 
-const Modal: React.FC<ChildrenOnlyProps> = ({ children }) => {
+interface Props extends ChildrenOnlyProps {
+  closeFn?: () => unknown;
+}
+
+const Modal: React.FC<Props> = ({ children, closeFn }) => {
   const viewportSize = useViewportSize();
 
   return ReactDOM.createPortal(
-    <Wrapper {...viewportSize}>{children}</Wrapper>,
+    <Wrapper onClick={closeFn} {...viewportSize}>
+      {children}
+    </Wrapper>,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     document.getElementById("root")!
   );

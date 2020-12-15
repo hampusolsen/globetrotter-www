@@ -1,17 +1,22 @@
-import { GoogleMap, useLoadScript } from "@react-google-maps/api";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { useAtom } from "jotai";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { LIGHT_MODE } from "../../../../../config/constants.config";
+import { EDIT } from "../../../../../config/constants.config";
 import LoadingOverlay from "../../../../../middleware/Loader";
-import { darkMode, lightMode } from "../../../../../resources/style/map.style";
+import { lightModes } from "../../../../../resources/style/map.style";
+import { toFlatArray } from "../../../../../resources/util/helpers";
 import { useGeolocation } from "../../../../../resources/util/hooks";
-import feedState from "../../../../../store/feed.state";
-
-const defaultCenterCoordinates = {
-  lat: 52.520007,
-  lng: 13.404954
-};
+import { submitStepAction } from "../../../../../store/happeningForm/happeningForm.actions";
+import { happeningFormReducerAtom } from "../../../../../store/happeningForm/happeningForm.state";
+import {
+  initializeMapAction,
+  mapClickAction,
+  setHappeningAction
+} from "../../../../../store/map/map.actions";
+import { mapReducerAtom } from "../../../../../store/map/map.state";
+import { toHappeningMarker } from "./Map.utils";
+import HappeningInfo from "./sub-components/HappeningInfo/HappeningInfo.sub";
 
 const Wrapper = styled.main`
   width: 100%;
@@ -29,42 +34,70 @@ const Wrapper = styled.main`
 
 const mapOptions: google.maps.MapOptions = {
   disableDefaultUI: true,
-  maxZoom: 15,
-  minZoom: 3
+  maxZoom: 16,
+  minZoom: 2
 };
 
 const Map: React.FC = () => {
-  const coordinates = useGeolocation();
-  const [{ mode }] = useAtom(feedState);
-  const [map, setMap] = useState<google.maps.Map>();
+  const [, formDispatch] = useAtom(happeningFormReducerAtom);
+  const [mapState, mapDispatch] = useAtom(mapReducerAtom);
+  const centerCoordinates = useGeolocation();
   const { isLoaded } = useLoadScript({
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY!,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY || "",
     preventGoogleFontsLoading: true
   });
 
   const onLoad = React.useCallback((map: google.maps.Map) => {
-    setMap(map);
+    if (mapState.instance) return;
+    mapDispatch(initializeMapAction(map));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!isLoaded || !centerCoordinates || !mapState.travels.length) {
+    return <LoadingOverlay />;
+  }
+
+  const handleMapClick = (e: google.maps.MouseEvent): void => {
+    const latLng = {
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng()
+    };
+
+    if (mapState.engageMode === EDIT) {
+      formDispatch(submitStepAction({ latLng }));
+    } else {
+      mapDispatch(mapClickAction(latLng));
+    }
+  };
+
+  const happeningMarkers = mapState.travels
+    .map(toHappeningMarker)
+    .reduce(toFlatArray);
 
   return (
     <Wrapper>
-      {isLoaded ? (
-        <GoogleMap
-          center={coordinates || defaultCenterCoordinates}
-          zoom={12}
-          onLoad={onLoad}
-          mapContainerClassName="map-container"
-          clickableIcons={false}
-          options={{
-            ...mapOptions,
-            styles: mode === LIGHT_MODE ? lightMode : darkMode
-          }}
-        >
-          <></>
-        </GoogleMap>
-      ) : (
-        <LoadingOverlay />
+      <GoogleMap
+        onClick={handleMapClick}
+        center={centerCoordinates}
+        zoom={12}
+        onLoad={onLoad}
+        mapContainerClassName="map-container"
+        clickableIcons={false}
+        options={{
+          ...mapOptions,
+          styles: lightModes[mapState.theme]
+        }}
+      >
+        {happeningMarkers.map((happening) => (
+          <Marker
+            key={happening.id}
+            position={happening.latLng}
+            onClick={() => mapDispatch(setHappeningAction(happening))}
+          />
+        ))}
+      </GoogleMap>
+      {mapState.activeHappening && (
+        <HappeningInfo happening={mapState.activeHappening} />
       )}
     </Wrapper>
   );

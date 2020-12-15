@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { pseudoBoilerplate } from "../../../../resources/style/css.style";
 import {
   color,
   font,
@@ -43,15 +44,19 @@ const Label = styled.label<StyleProps>`
     `
     > div.react-datepicker-wrapper {
       position: relative;
-      left: 52px;
+      left: 0;
       top: 50%;
       transform: translateY(-50%);
       visibility: hidden;
     }
+  `}
 
-    > div.readable-date {
-
-    }
+  ${({ type }) =>
+    type === "radio" &&
+    `
+    background: none;
+    margin: 0;
+    border: none;
   `}
 
   svg {
@@ -122,6 +127,52 @@ const Label = styled.label<StyleProps>`
     }
   }
 
+  input[type="radio"] {
+    display: none;
+
+    + p {
+      position: absolute;
+      font-size: 14px;
+      width: 100%;
+      height: 100%;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding-left: 46px;
+      box-sizing: border-box;
+
+      &::after,
+      &::before {
+        ${pseudoBoilerplate}
+        left: 10%;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid grey;
+        background-color: white;
+      }
+
+      &::before {
+        width: 12px;
+        height: 12px;
+        z-index: 1;
+      }
+    }
+
+    &:checked + p {
+      color: white;
+      background-color: ${color.blue};
+      &::before {
+        background-color: ${color.blue};
+        border: none;
+      }
+      &::after {
+        border: none;
+      }
+    }
+  }
+
   p.readable-date {
     position: absolute;
     left: 62px;
@@ -151,6 +202,7 @@ const Label = styled.label<StyleProps>`
     position: absolute;
     bottom: -16px;
     left: 4px;
+    color: ${color.red};
   }
 `;
 

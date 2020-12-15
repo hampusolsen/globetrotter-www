@@ -1,8 +1,15 @@
 import Axios from "axios";
 import { TravelFormValues } from "../components/views/CreateTravel/CreateTravel.view";
 import { EditProfileFormValues } from "../components/views/Profile/outlets/EditProfile.outlet";
-import { HappeningRequestData, Travel } from "../store/types.state";
-import { LocalCredentials, ProfileResponseData } from "./api.types";
+import { HappeningFieldValues } from "../store/happeningForm/happeningForm.types";
+import { Happening, RequiredTravel, Travel } from "../store/types.state";
+import {
+  HappeningResponseData,
+  LocalCredentials,
+  ProfileResponseData,
+  TravelResponseData
+} from "./api.types";
+import { toFormatHappening, toFormatTravel } from "./api.utils";
 
 class APIClient {
   #client = Axios.create({
@@ -16,7 +23,7 @@ class APIClient {
       return data;
     }
 
-    const { data } = await this.#client.get("/user/profile/");
+    const { data } = await this.#client.get("/user/profile");
     return data;
   }
 
@@ -69,28 +76,40 @@ class APIClient {
     return data;
   }
 
+  async fetchTravels(): Promise<RequiredTravel[]> {
+    const { data } = await this.#client.get<TravelResponseData[]>("/travel");
+    return data.map(toFormatTravel);
+  }
+
   async updateTravel(travel: Required<Travel>) {
     const { data } = await this.#client.put(`/travel/${travel.id}`, travel);
     return data;
   }
 
-  async createHappening(happening: HappeningRequestData) {
+  async createHappening(
+    happening: HappeningFieldValues
+  ): Promise<Required<Happening>> {
     const formData = new FormData();
 
     Object.entries(happening).forEach(([key, value]) => {
       if (key === "images" && happening[key].length) {
         happening[key].forEach((image) => formData.append(key, image));
+      } else if (key === "latLng") {
+        formData.append(
+          "geoJSON",
+          JSON.stringify([happening.latLng.lng, happening.latLng.lat])
+        );
       } else if (value) {
         formData.append(key, value);
       }
     });
 
-    const { data } = await this.#client.post(
+    const { data } = await this.#client.post<HappeningResponseData>(
       `/travel/${happening.travelId}`,
       formData
     );
 
-    return data;
+    return toFormatHappening(data);
   }
 }
 

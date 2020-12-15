@@ -1,3 +1,4 @@
+import { useAtom } from "jotai";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
@@ -5,6 +6,7 @@ import RoutePaths from "../../../../config/router.config";
 import { centerCenter } from "../../../../resources/style/css.style";
 import { color } from "../../../../resources/style/variables.style";
 import { useTrailingSlug } from "../../../../resources/util/hooks";
+import { drawerAtom } from "../../../../store/drawer.state";
 import GlobeIcon from "../../../common/icons/Globe.icon";
 import TicketIcon from "../../../common/icons/Ticket.icon";
 
@@ -55,13 +57,14 @@ const links = [
 ];
 
 const Navigation: React.FC = () => {
+  const [, setDrawerOpen] = useAtom(drawerAtom);
   const slug = useTrailingSlug();
   const translateBy = slug === "feed" ? 0 : 33.33;
 
   return (
     <Nav translateBy={translateBy}>
       {links.map(({ to, end, Icon, name }) => (
-        <Link key={name} to={to} end={end}>
+        <Link key={name} to={to} end={end} onClick={() => setDrawerOpen(false)}>
           <Icon />
         </Link>
       ))}
